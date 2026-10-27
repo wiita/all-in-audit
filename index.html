@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The All-In Audit</title>
+<meta name="description" content="An independent, sourced audit of the factual claims and predictions made on the All-In Podcast. Opening soon.">
+<meta property="og:title" content="The All-In Audit">
+<meta property="og:description" content="Every checkable claim and prediction on the All-In Podcast, checked against the public record. Opening soon.">
+<meta property="og:url" content="https://allin.fan">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Archivo:wdth,wght@75..125,400..700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #E8ECF0;
+    --sheet: #F6F8FA;
+    --ink: #1B2A41;
+    --pencil: #5E6B7A;
+    --rule: #A9BDD1;
+    --red: #B3122B;
+    --serif: "Spectral", Georgia, serif;
+    --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+  a { color: inherit; text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .wrap { max-width: 60rem; margin: 0 auto; padding: 0 1.25rem; }
+
+  header.top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 1.5rem 0 0;
+    font-family: var(--sans); font-size: .9rem; color: var(--pencil);
+  }
+  header.top strong { color: var(--ink); font-weight: 700; font-stretch: 112%; letter-spacing: .01em; }
+
+  .hero { padding: 4.5rem 0 3rem; max-width: 44rem; }
+  h1 {
+    font-weight: 700; font-size: clamp(2.4rem, 6vw, 4.2rem);
+    line-height: 1.04; letter-spacing: -.015em; margin: 0 0 1.5rem;
+  }
+  .lede { font-size: 1.3rem; line-height: 1.5; margin: 0; max-width: 36rem; }
+
+  /* The ledger: the one bold element */
+  .ledger-wrap { position: relative; margin: 1rem 0 4rem; }
+  .ledger {
+    width: 100%; border-collapse: collapse; background: var(--sheet);
+    font-family: var(--sans); font-variant-numeric: tabular-nums;
+    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(27,42,65,.45);
+  }
+  .ledger caption {
+    text-align: left; font-family: var(--serif); font-style: italic;
+    color: var(--pencil); padding: 0 0 .75rem; font-size: 1rem;
+  }
+  .ledger th, .ledger td {
+    padding: .95rem 1rem; text-align: right; border-bottom: 1px solid var(--rule);
+    font-size: 1rem;
+  }
+  .ledger thead th {
+    font-weight: 600; font-size: .85rem; color: var(--pencil);
+    border-bottom: 2px solid var(--ink); vertical-align: bottom;
+  }
+  .ledger th[scope=row], .ledger thead th:first-child {
+    text-align: left; font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink);
+  }
+  .ledger thead th:first-child { font-family: var(--sans); font-size: .85rem; color: var(--pencil); }
+  .ledger td { color: var(--rule); }
+  .ledger tbody tr:last-child th, .ledger tbody tr:last-child td { border-bottom: 0; }
+
+  .stamp {
+    position: absolute; right: 7%; top: 52%;
+    transform: translateY(-50%) rotate(-9deg);
+    font-family: var(--sans); font-weight: 700; font-stretch: 120%;
+    font-size: clamp(1.1rem, 3.2vw, 1.9rem); letter-spacing: .06em; line-height: 1.1;
+    color: var(--red); text-align: center;
+    border: 3px solid var(--red); border-radius: 6px; padding: .55em .9em .45em;
+    background: rgba(246,248,250,.55);
+    mix-blend-mode: multiply; opacity: .9;
+    pointer-events: none;
+  }
+  .stamp small { display: block; font-size: .45em; letter-spacing: .12em; font-weight: 600; margin-top: .25em; }
+  @media (prefers-reduced-motion: no-preference) {
+    .stamp { animation: thud .5s cubic-bezier(.2,.9,.3,1.2) .6s both; }
+    @keyframes thud {
+      from { opacity: 0; transform: translateY(-50%) rotate(-9deg) scale(1.6); }
+      to   { opacity: .9; transform: translateY(-50%) rotate(-9deg) scale(1); }
+    }
+  }
+
+  .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); gap: 2rem 4rem; padding: 0 0 4rem; max-width: 50rem; }
+  .rules h2 { font-size: 1.15rem; margin: 0 0 .4rem; font-weight: 700; }
+  .rules p { margin: 0; color: #33445C; font-size: 1.02rem; }
+
+  footer {
+    border-top: 1px solid var(--rule); padding: 1.5rem 0 3rem;
+    font-family: var(--sans); font-size: .9rem; color: var(--pencil);
+    display: flex; flex-wrap: wrap; gap: .5rem 2rem; justify-content: space-between;
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 3rem 0 2rem; }
+    .lede { font-size: 1.15rem; }
+    .ledger th, .ledger td { padding: .75rem .5rem; font-size: .9rem; }
+    .ledger .opt { display: none; }
+    .stamp { right: 4%; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <strong>The All-In Audit</strong>
+    <span>allin.fan</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Four besties. Hundreds of episodes. Every checkable claim, checked.</h1>
+      <p class="lede">The All-In Podcast shapes how a lot of people think about markets, tech and policy. This is an independent record of what its hosts have said, measured against the evidence, with predictions tracked until they come due.</p>
+    </section>
+
+    <div class="ledger-wrap">
+      <table class="ledger">
+        <caption>Scorecard, by host</caption>
+        <thead>
+          <tr>
+            <th scope="col">Host</th>
+            <th scope="col">Claims checked</th>
+            <th scope="col">Accurate</th>
+            <th scope="col" class="opt">Misleading</th>
+            <th scope="col">False</th>
+            <th scope="col" class="opt">Predictions due</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Chamath Palihapitiya</th><td>—</td><td>—</td><td class="opt">—</td><td>—</td><td class="opt">—</td></tr>
+          <tr><th scope="row">David Sacks</th><td>—</td><td>—</td><td class="opt">—</td><td>—</td><td class="opt">—</td></tr>
+          <tr><th scope="row">David Friedberg</th><td>—</td><td>—</td><td class="opt">—</td><td>—</td><td class="opt">—</td></tr>
+          <tr><th scope="row">Jason Calacanis</th><td>—</td><td>—</td><td class="opt">—</td><td>—</td><td class="opt">—</td></tr>
+        </tbody>
+      </table>
+      <div class="stamp" aria-hidden="true">Audit in progress<small>Opening soon</small></div>
+    </div>
+    <p class="sr-only">The scorecard is empty until the audit opens.</p>
+
+    <section class="rules" aria-label="How the audit works">
+      <div>
+        <h2>Quoted, not paraphrased</h2>
+        <p>Every entry carries the speaker's exact words and the moment in the episode they said them.</p>
+      </div>
+      <div>
+        <h2>Sourced, every time</h2>
+        <p>No verdict without the evidence behind it. If the record can't settle a claim, it's marked unverified rather than guessed.</p>
+      </div>
+      <div>
+        <h2>Predictions come due</h2>
+        <p>Forecasts are logged with their deadline and checked again when the date arrives, hit or miss.</p>
+      </div>
+      <div>
+        <h2>Corrections are public</h2>
+        <p>If a verdict is wrong, it gets fixed in the open, with the change and the reason logged.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>An independent audit by Vita Pur. Not affiliated with the All-In Podcast.</span>
+    <span>Launching with the most recent 25 episodes.</span>
+  </footer>
+</div>
+</body>
+</html>
