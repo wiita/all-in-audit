@@ -33,6 +33,11 @@
   .pred .who{font-weight:600}
   .pred .rule{font-size:.9rem;color:#33445C}
   .due{font-family:var(--sans);font-weight:600;color:var(--ink)}
+  .ask{display:flex;gap:.5rem;margin-bottom:.4rem}
+  .ask input{flex:1 1 auto;min-width:0;font-size:1rem;padding:.65rem .8rem}
+  .asknote{font-size:.82rem;color:var(--pencil);margin:0 0 1.1rem}
+  .asknote .tag{display:inline-block;background:var(--sheet);border:1px solid var(--soft);border-radius:3px;padding:0 .4em;margin:0 .2em .2em 0;color:var(--ink)}
+  .asknote button{font:inherit;color:var(--ink);background:none;border:0;text-decoration:underline;cursor:pointer;padding:0}
   .filters{display:flex;flex-wrap:wrap;gap:.6rem .8rem;align-items:center;margin-bottom:1rem}
   .filters label{font-family:var(--sans);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--pencil)}
   .filters input[type=search]{flex:1 1 14rem;min-width:0}
@@ -125,6 +130,12 @@
         <p class="kicker">The record</p>
         <h2 id="cl-h">All claims</h2>
       </div>
+      <form class="ask" id="ask" role="search" autocomplete="off">
+        <label for="ask-q" class="sr-only">Ask the record</label>
+        <input id="ask-q" type="search" maxlength="200" placeholder="Ask the record, e.g. “What did Sacks get wrong about immigration?”">
+        <button class="btn" type="submit" id="ask-go">Ask</button>
+      </form>
+      <p class="asknote" id="ask-msg" aria-live="polite">Your question is turned into filters. Results are always the audit's own entries, never generated text.</p>
       <div class="filters" role="search">
         <label for="f-host">Host</label>
         <select id="f-host"><option value="">All</option></select>
@@ -219,14 +230,40 @@
   function render(reset){
     if(reset) shown=25;
     const h=$("f-host").value, v=$("f-verdict").value, l=$("f-lean").value, c=$("f-cat").value, q=$("f-q").value.trim().toLowerCase();
-    const list=rows.filter(r=>(!h||r.speaker===h)&&(!v||r.verdict===v)&&(!l||r.lean===l)&&(!c||r.category===c)&&(!q||(r.quote+" "+r.claim+" "+r.evidence).toLowerCase().includes(q)))
+    const A=ask, text=r=>(r.quote+" "+r.claim+" "+r.evidence+" "+r.notes).toLowerCase();
+    const list=rows.filter(r=> A ? (
+        (!A.hosts.length||A.hosts.includes(r.speaker))&&(!A.verdicts.length||A.verdicts.includes(r.verdict))&&(!A.lean||r.lean===A.lean)
+        &&(!A.categories.length||A.categories.includes(r.category))&&(!A.predictions_only||r.type==="Prediction")
+        &&(!A.keywords.length||A.keywords.some(k=>text(r).includes(k.toLowerCase())))
+      ) : ((!h||r.speaker===h)&&(!v||r.verdict===v)&&(!l||r.lean===l)&&(!c||r.category===c)&&(!q||text(r).includes(q))))
       .sort((a,b)=>(order[a.verdict]??9)-(order[b.verdict]??9)||b.date.localeCompare(a.date));
     $("count").textContent=`${list.length} statement${list.length===1?"":"s"}${list.length>shown?`, showing ${shown}`:""}`;
     $("entries").innerHTML=list.slice(0,shown).map(entry).join("");
     $("more").hidden=list.length<=shown;
   }
-  ["f-host","f-verdict","f-lean","f-cat"].forEach(id=>$(id).addEventListener("change",()=>render(true)));
-  $("f-q").addEventListener("input",()=>render(true));
+  let ask=null;
+  const NOTE=$("ask-msg").innerHTML;
+  function clearAsk(){ ask=null; $("ask-msg").innerHTML=NOTE; }
+  ["f-host","f-verdict","f-lean","f-cat"].forEach(id=>$(id).addEventListener("change",()=>{clearAsk();render(true);}));
+  $("f-q").addEventListener("input",()=>{clearAsk();render(true);});
+  $("ask").addEventListener("submit",async e=>{
+    e.preventDefault();
+    const q=$("ask-q").value.trim(); if(q.length<3) return;
+    $("ask-go").disabled=true; $("ask-msg").textContent="Looking…";
+    try{
+      const r=await fetch("/api/ask",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({q})});
+      const d=await r.json().catch(()=>({}));
+      if(!r.ok){ $("ask-msg").textContent=d.error||"Ask is unavailable right now."; return; }
+      if(d.off_topic){ $("ask-msg").textContent="Ask searches what the four hosts said on the show. Try a question about a host, a topic or a verdict."; return; }
+      ask=d; ["f-host","f-verdict","f-lean","f-cat"].forEach(id=>$(id).value=""); $("f-q").value="";
+      const tags=[...d.hosts,...d.verdicts,d.lean,...d.categories,d.predictions_only?"Predictions":"",...d.keywords.map(k=>"“"+k+"”")].filter(Boolean);
+      $("ask-msg").innerHTML=`Showing: ${tags.length?tags.map(t=>`<span class="tag">${esc(t)}</span>`).join(""):"everything"} <button type="button" id="ask-clear">Clear</button>`;
+      $("ask-clear").addEventListener("click",()=>{clearAsk();$("ask-q").value="";render(true);});
+      render(true);
+      document.getElementById("count").scrollIntoView({behavior:"smooth",block:"start"});
+    }catch(err){ $("ask-msg").textContent="Ask is unavailable right now."; }
+    finally{ $("ask-go").disabled=false; }
+  });
   $("more").addEventListener("click",()=>{shown+=25;render(false);});
   render(true);
 })();
