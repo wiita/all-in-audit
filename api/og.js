@@ -24,7 +24,16 @@ module.exports = async function handler(req, res) {
   if (ID_RE.test(id)) r = (await loadRows(originOf(req))).find(x => x.id === id) || null;
 
   let tree;
-  if (!r) {
+  if (id === "game") {
+    const stamp = (t, c) => h("div", { fontSize: 34, fontWeight: 600, letterSpacing: 4, color: c, border: `4px solid ${c}`, borderRadius: 10, padding: "10px 26px 8px", marginRight: 22 }, t);
+    tree = h("div", { width: "100%", height: "100%", background: C.paper, color: C.ink, flexDirection: "column", justifyContent: "center", padding: "80px", fontFamily: "Geist" }, [
+      h("div", { fontFamily: "Geist Mono", fontSize: 26, letterSpacing: 3, color: C.False }, "THE ALL-IN AUDIT · GAME"),
+      h("div", { fontSize: 88, fontWeight: 600, letterSpacing: -3, marginTop: 20, lineHeight: 1.0 }, "Accurate or False?"),
+      h("div", { fontSize: 34, color: C.pencil, marginTop: 22 }, "Ten real quotes from the All-In hosts. Guess the verdict."),
+      h("div", { marginTop: 44 }, [stamp("ACCURATE", C.Accurate), stamp("MISLEADING", C.Misleading), stamp("FALSE", C.False)]),
+      h("div", { fontSize: 28, color: C.pencil, marginTop: 40 }, "allin.fan/game")
+    ]);
+  } else if (!r) {
     tree = h("div", { width: "100%", height: "100%", background: C.paper, color: C.ink, flexDirection: "column", justifyContent: "center", padding: "80px", fontFamily: "Geist" }, [
       h("div", { fontFamily: "Geist Mono", fontSize: 26, letterSpacing: 3, color: C.False }, "THE ALL-IN AUDIT"),
       h("div", { fontSize: 72, fontWeight: 600, letterSpacing: -2, marginTop: 24, lineHeight: 1.05 }, "Four besties. Every checkable claim, checked."),
