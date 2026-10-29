@@ -13,16 +13,17 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Archivo:wdth,wght@75..125,400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <style>
   .hero{padding:3.5rem 0 1rem;max-width:46rem}
   .hero .lede strong{font-weight:600}
-  .stats{display:flex;flex-wrap:wrap;gap:.75rem 2.5rem;margin-top:1.6rem;font-family:var(--sans)}
+  .stats{display:grid;grid-template-columns:repeat(5,minmax(0,auto));justify-content:start;gap:.75rem 3rem;margin-top:2rem;font-family:var(--sans)}
+  @media (max-width:760px){.stats{grid-template-columns:repeat(3,minmax(0,auto));gap:1rem 2rem}}
   .stats div{display:flex;flex-direction:column}
-  .stats b{font-size:2rem;font-weight:700;font-stretch:115%;line-height:1;font-variant-numeric:tabular-nums}
-  .stats span{font-size:.8rem;color:var(--pencil);text-transform:uppercase;letter-spacing:.06em;margin-top:.3rem}
-  td.fal{color:var(--fal);font-weight:700}
+  .stats b{font-size:2.1rem;font-weight:500;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+  .stats span{font-size:.74rem;color:var(--pencil);text-transform:uppercase;letter-spacing:.08em;margin-top:.45rem;white-space:nowrap}
+  td.fal{color:var(--fal);font-weight:600}
   td.mis{color:var(--mis)}
   td.acc{color:var(--acc)}
   .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:1.25rem}
@@ -31,7 +32,7 @@
   .pred p{margin:0}
   .pred .who{font-weight:600}
   .pred .rule{font-size:.9rem;color:#33445C}
-  .due{font-family:var(--sans);font-weight:700;color:var(--ink)}
+  .due{font-family:var(--sans);font-weight:600;color:var(--ink)}
   .filters{display:flex;flex-wrap:wrap;gap:.6rem .8rem;align-items:center;margin-bottom:1rem}
   .filters label{font-family:var(--sans);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--pencil)}
   .filters input[type=search]{flex:1 1 14rem;min-width:0}
@@ -40,8 +41,8 @@
   .entry{background:var(--sheet);border:1px solid var(--soft);border-left:4px solid var(--rule);border-radius:2px;padding:1rem 1.15rem;display:flex;flex-direction:column;gap:.5rem;min-width:0}
   .entry.e-Accurate{border-left-color:var(--acc)} .entry.e-Misleading{border-left-color:var(--mis)} .entry.e-False{border-left-color:var(--fal)} .entry.e-Pending{border-left-color:var(--pen)}
   .entry .meta{display:flex;flex-wrap:wrap;gap:.3rem 1rem;align-items:center;font-family:var(--sans);font-size:.8rem;color:var(--pencil);font-variant-numeric:tabular-nums}
-  .entry .meta .who{color:var(--ink);font-weight:700;font-size:.92rem}
-  .entry blockquote{margin:0;font-style:italic;font-size:1.08rem;line-height:1.45;overflow-wrap:anywhere}
+  .entry .meta .who{color:var(--ink);font-weight:600;font-size:.92rem}
+  .entry blockquote{margin:0;font-style:normal;font-weight:400;color:#24354D;font-size:1.08rem;line-height:1.45;overflow-wrap:anywhere}
   .entry .claim{margin:0;font-size:.97rem;overflow-wrap:anywhere}
   .entry details summary{cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600;color:var(--ink)}
   .entry details[open] summary{margin-bottom:.4rem}
@@ -99,6 +100,13 @@
       </div>
     </section>
 
+    <section aria-label="Game">
+      <div class="game">
+        <div><h2>Accurate or False?</h2><p>Ten real quotes from the show. Guess the verdict, then see the evidence.</p></div>
+        <a class="btn" href="/game">Play</a>
+      </div>
+    </section>
+
     <section id="predictions" aria-labelledby="pr-h">
       <div class="sechead">
         <p class="kicker">Predictions</p>
@@ -111,12 +119,6 @@
       <div class="grid2" id="resolved"></div>
     </section>
 
-    <section aria-label="Game">
-      <div class="game">
-        <div><h2>Accurate or False?</h2><p>Ten real quotes from the show. Guess the verdict, then see the evidence.</p></div>
-        <a class="btn" href="/game">Play</a>
-      </div>
-    </section>
 
     <section id="claims" aria-labelledby="cl-h">
       <div class="sechead">
@@ -142,7 +144,7 @@
   </main>
 
   <footer>
-    <span>An independent audit by Vita Pur. Not affiliated with the All-In Podcast. Quotes are short excerpts for commentary; listen to the full episodes on the show's own channels.</span>
+    <span>An independent audit by <a href="https://x.com/wiitapur" target="_blank" rel="noopener">@wiitapur</a>. Not affiliated with the All-In Podcast. Quotes are short excerpts for commentary; listen to the full episodes on the show's own channels.</span>
     <span>Spotted an error? <a href="https://github.com/wiita/all-in-audit/issues/new?template=correction.yml">Request a correction</a> · <span id="src"></span></span>
   </footer>
 </div>
@@ -173,7 +175,7 @@
     return {h,n:rt.length,a:c("Accurate"),m:c("Misleading"),f:c("False"),u:mine.filter(r=>r.verdict==="Unverified").length,p:mine.filter(r=>r.verdict==="Pending").length};
   }).sort((x,y)=>pct(y.f,y.n)-pct(x.f,x.n)||pct(y.m,y.n)-pct(x.m,x.n));
   const maxF=Math.max(...sc.map(s=>pct(s.f,s.n)),1);
-  $("score").tBodies[0].innerHTML=sc.map(s=>`<tr><th scope="row">${esc(s.h)}</th><td>${s.n}</td><td class="acc">${s.a}</td><td class="mis">${s.m}</td><td class="fal">${s.f}</td><td class="fal">${pct(s.f,s.n)}%<span class="bar" style="width:${Math.round(60*pct(s.f,s.n)/maxF)}px" aria-hidden="true"></span></td><td class="opt">${s.u}</td><td class="opt">${s.p}</td></tr>`).join("");
+  $("score").tBodies[0].innerHTML=sc.map(s=>`<tr><th scope="row">${esc(s.h)}</th><td>${s.n}</td><td class="acc">${s.a}</td><td class="mis">${s.m}</td><td class="fal">${s.f}</td><td class="fal"><span class="bar" style="width:${Math.round(60*pct(s.f,s.n)/maxF)}px" aria-hidden="true"></span><span class="pctv">${pct(s.f,s.n)}%</span></td><td class="opt">${s.u}</td><td class="opt">${s.p}</td></tr>`).join("");
 
   // lean
   const bad=r=>r.verdict==="False"||r.verdict==="Misleading";
@@ -182,7 +184,7 @@
     const pro=mine.filter(r=>r.lean==="Pro-admin"), cr=mine.filter(r=>r.lean==="Critical");
     const proR=pro.filter(r=>RATED.includes(r.verdict)), oth=mine.filter(r=>r.lean!=="Pro-admin"&&RATED.includes(r.verdict));
     const pb=proR.filter(bad).length, ob=oth.filter(bad).length;
-    return `<tr><th scope="row">${esc(h)}</th><td>${pro.length+cr.length}</td><td style="color:var(--pro);font-weight:700">${pro.length}</td><td style="color:var(--crit)">${cr.length}</td><td>${proR.length?`${pct(pb,proR.length)}% <span class="note">(${pb} of ${proR.length})</span>`:"—"}</td><td class="opt">${pct(ob,oth.length)}% <span class="note">(${ob} of ${oth.length})</span></td></tr>`;
+    return `<tr><th scope="row">${esc(h)}</th><td>${pro.length+cr.length}</td><td style="color:var(--pro);font-weight:600">${pro.length}</td><td style="color:var(--crit)">${cr.length}</td><td>${proR.length?`${pct(pb,proR.length)}% <span class="note">(${pb} of ${proR.length})</span>`:"—"}</td><td class="opt">${pct(ob,oth.length)}% <span class="note">(${ob} of ${oth.length})</span></td></tr>`;
   }).join("");
 
   // predictions

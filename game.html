@@ -12,7 +12,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Archivo:wdth,wght@75..125,400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <style>
   .stage{max-width:44rem;display:flex;flex-direction:column;gap:1.1rem;padding-top:2.5rem}
@@ -27,24 +27,24 @@
   .file{background:var(--sheet);border:1px solid var(--soft);border-radius:3px;position:relative;overflow:hidden;box-shadow:0 1px 0 var(--rule),0 18px 40px -28px rgba(27,42,65,.45)}
   .tab{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem;padding:.6rem 1.1rem;border-bottom:1px dashed var(--rule);font-family:var(--sans);font-size:.78rem;color:var(--pencil);font-variant-numeric:tabular-nums}
   .body{padding:1.3rem 1.3rem 1.4rem;display:flex;flex-direction:column;gap:.9rem;min-width:0}
-  .who{font-family:var(--sans);font-weight:700;font-stretch:112%;font-size:1.25rem;margin:0}
+  .who{font-family:var(--sans);font-weight:600;font-size:1.25rem;margin:0}
   .ep{font-size:.9rem;color:var(--pencil);margin:0}
-  blockquote{margin:0;font-size:clamp(1.15rem,3.2vw,1.4rem);line-height:1.42;font-style:italic;border-left:3px solid var(--ink);padding-left:.9rem;overflow-wrap:anywhere}
+  blockquote{margin:0;font-size:clamp(1.12rem,3vw,1.35rem);line-height:1.45;font-style:normal;font-weight:400;border-left:3px solid var(--ink);padding-left:.9rem;overflow-wrap:anywhere}
   .claim{margin:0;font-size:.98rem}
   .stamps{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
-  .stamp{cursor:pointer;border:2px solid currentColor;background:transparent;border-radius:5px;padding:.75rem .3rem;font-family:var(--sans);font-weight:700;font-stretch:118%;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase}
+  .stamp{cursor:pointer;border:1.5px solid currentColor;background:transparent;border-radius:5px;padding:.75rem .3rem;font-family:var(--sans);font-weight:600;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase}
   .stamp:hover{background:color-mix(in srgb,currentColor 8%,transparent)}
   .stamp[disabled]{cursor:default;opacity:.4}
   .stamp.picked{opacity:1;background:color-mix(in srgb,currentColor 12%,transparent)}
-  .mark{position:absolute;right:1.1rem;top:3.2rem;transform:rotate(-9deg);font-family:var(--sans);font-weight:700;font-stretch:120%;font-size:clamp(1.4rem,5vw,2.1rem);letter-spacing:.07em;text-transform:uppercase;border:3px solid currentColor;border-radius:6px;padding:.2em .6em;opacity:.9;mix-blend-mode:multiply;pointer-events:none}
+  .mark{position:absolute;right:1.1rem;top:3.2rem;transform:rotate(-9deg);font-family:var(--sans);font-weight:600;font-size:clamp(1.4rem,5vw,2.1rem);letter-spacing:.07em;text-transform:uppercase;border:3px solid currentColor;border-radius:6px;padding:.2em .6em;opacity:.9;mix-blend-mode:multiply;pointer-events:none}
   @media (prefers-reduced-motion:no-preference){.mark{animation:thud .25s ease-out}}
   @keyframes thud{from{transform:rotate(-9deg) scale(1.6);opacity:0}to{transform:rotate(-9deg) scale(1);opacity:.9}}
   .reveal{border-top:1px dashed var(--rule);padding-top:.9rem;display:flex;flex-direction:column;gap:.6rem;min-width:0}
   .reveal p{margin:0;overflow-wrap:anywhere}
-  .result{font-family:var(--sans);font-weight:700;font-size:1.02rem}
+  .result{font-family:var(--sans);font-weight:600;font-size:1.02rem}
   .srcs{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-family:var(--sans);font-size:.82rem;overflow-wrap:anywhere}
   .row{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:space-between;align-items:center}
-  .big{font-family:var(--sans);font-weight:700;font-stretch:118%;font-size:clamp(2.6rem,10vw,4rem);line-height:1;margin:0}
+  .big{font-family:var(--sans);font-weight:600;font-size:clamp(2.6rem,10vw,4rem);line-height:1;margin:0}
   .s-Accurate{color:var(--acc)} .s-Misleading{color:var(--mis)} .s-False{color:var(--fal)}
 </style>
 </head>
@@ -71,7 +71,7 @@
     <p class="note">Every card is a real statement, quoted from the episode at the timestamp shown, with the audit's verdict and sources. Decks are balanced so about a third of the cards carry each verdict; across the full record, most claims are accurate.</p>
   </main>
   <footer>
-    <span>An independent audit by Vita Pur. Not affiliated with the All-In Podcast.</span>
+    <span>An independent audit by <a href="https://x.com/wiitapur" target="_blank" rel="noopener">@wiitapur</a>. Not affiliated with the All-In Podcast.</span>
     <span><a href="/methodology">How verdicts are decided</a></span>
   </footer>
 </div>
