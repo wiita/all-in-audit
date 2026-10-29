@@ -1,4 +1,8 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/c/:id", "destination": "/api/c?id=:id" },
+    { "source": "/og/:id.png", "destination": "/api/og?id=:id" }
+  ]
 }

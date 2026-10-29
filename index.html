@@ -9,7 +9,12 @@
 <meta property="og:description" content="Every checkable claim and prediction by the All-In Podcast hosts, checked against the public record.">
 <meta property="og:url" content="https://allin.fan">
 <meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://allin.fan/og/home.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@wiitapur">
+<meta name="twitter:image" content="https://allin.fan/og/home.png">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,22 +67,11 @@
   .filters input[type=search]{flex:1 1 14rem;min-width:0}
   .count{font-family:var(--sans);font-size:.85rem;color:var(--pencil);margin:0 0 .8rem}
   .entries{display:flex;flex-direction:column;gap:.9rem}
-  .entry{background:var(--sheet);border:1px solid var(--soft);border-left:4px solid var(--rule);border-radius:2px;padding:1rem 1.15rem;display:flex;flex-direction:column;gap:.5rem;min-width:0}
-  .entry.e-Accurate{border-left-color:var(--acc)} .entry.e-Misleading{border-left-color:var(--mis)} .entry.e-False{border-left-color:var(--fal)} .entry.e-Pending{border-left-color:var(--pen)}
-  .entry .meta{display:flex;flex-wrap:wrap;gap:.3rem 1rem;align-items:center;font-family:var(--sans);font-size:.8rem;color:var(--pencil);font-variant-numeric:tabular-nums}
-  .entry .meta .who{color:var(--ink);font-weight:600;font-size:.92rem}
-  .entry blockquote{margin:0;font-style:normal;font-weight:400;color:#24354D;font-size:1.08rem;line-height:1.45;overflow-wrap:anywhere}
-  .entry .claim{margin:0;font-size:.97rem;overflow-wrap:anywhere}
-  .entry details summary{cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600;color:var(--ink)}
-  .entry details[open] summary{margin-bottom:.4rem}
-  .entry details p{margin:0 0 .45rem;font-size:.95rem;overflow-wrap:anywhere}
-  .srcs{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-family:var(--sans);font-size:.82rem;overflow-wrap:anywhere}
   .more{margin-top:1.2rem}
   .game{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;background:var(--ink);color:var(--sheet);border-radius:3px;padding:1.4rem 1.5rem}
   .game h2{color:var(--sheet)}
   .game p{margin:0;max-width:34rem;color:#C9D4E0}
   .game .btn{background:var(--sheet);color:var(--ink);border-color:var(--sheet)}
-  .leanpill{font-family:var(--sans);font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
   @media (max-width:640px){ .ledger th,.ledger td{padding:.65rem .5rem;font-size:.88rem} .opt{display:none} .hero{padding-top:2.5rem} }
 </style>
 </head>
@@ -191,7 +185,7 @@
   </main>
 
   <footer>
-    <span>An independent audit by <a class="xfoot" href="https://x.com/wiitapur" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" fill="currentColor"><path d="M18.901 1.123h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.124h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>@wiitapur</a>. Not affiliated with the All-In Podcast. Quotes are short excerpts for commentary; listen to the full episodes on the show's own channels.</span>
+    <span>An independent audit by <a class="xfoot" href="https://x.com/wiitapur" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>@wiitapur</a>. Not affiliated with the All-In Podcast. Quotes are short excerpts for commentary; listen to the full episodes on the show's own channels.</span>
     <span>Spotted an error? <a href="https://github.com/wiita/all-in-audit/issues/new?template=correction.yml">Request a correction</a> · <span id="src"></span></span>
   </footer>
 </div>
@@ -254,6 +248,10 @@
   [...new Set(rows.map(r=>r.category).filter(Boolean))].sort().forEach(c=>$("f-cat").insertAdjacentHTML("beforeend",`<option>${esc(c)}</option>`));
   const order={False:0,Misleading:1,Unverified:2,Pending:3,Accurate:4};
   let shown=25;
+  const XI='<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>';
+  const xHref=r=>`https://x.com/intent/post?text=${encodeURIComponent(`${r.speaker} on All-In (${fmtDate(r.date)}): rated ${r.verdict}.`)}&url=${encodeURIComponent("https://allin.fan/c/"+r.id)}&via=wiitapur`;
+  document.addEventListener("click",async e=>{const b=e.target.closest("[data-copy]"); if(!b) return;
+    try{await navigator.clipboard.writeText(b.dataset.copy); b.textContent="Link copied"; setTimeout(()=>b.textContent="Copy link",1800);}catch(err){prompt("Copy this link",b.dataset.copy);}});
   function entry(r){
     const src=r.sources.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(hostOf(u))}</a>`).join("");
     return `<article class="entry e-${esc(r.verdict)}">
@@ -261,6 +259,7 @@
       <blockquote>“${esc(r.quote)}”</blockquote>
       <p class="claim"><strong>Claim:</strong> ${esc(r.claim)}</p>
       <details><summary>Evidence and sources</summary><p>${esc(r.evidence)}</p>${r.notes?`<p class="note">${esc(r.notes)}</p>`:""}<div class="srcs">${src}</div></details>
+      <div class="share"><a href="/c/${esc(r.id)}">Open claim page</a><a href="${esc(xHref(r))}" target="_blank" rel="noopener">${XI} Post on X</a><button type="button" data-copy="${esc(location.origin+"/c/"+r.id)}">Copy link</button></div>
     </article>`;
   }
   function render(reset){
