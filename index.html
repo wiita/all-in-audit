@@ -47,6 +47,11 @@
   .pred p{margin:0}
   .pred .who{font-weight:600}
   .pred .rule{font-size:.9rem;color:#33445C}
+  .pfoot{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-top:auto}
+  .pfoot .due{margin:0}
+  .xmini{display:inline-flex;align-items:center;justify-content:center;width:1.5rem;height:1.5rem;border-radius:50%;color:var(--pencil);border:1px solid var(--soft);flex:0 0 auto}
+  .xmini svg{width:10px;height:10px}
+  .xmini:hover{color:var(--sheet);background:var(--ink);border-color:var(--ink)}
   .due{font-family:var(--sans);font-weight:600;color:var(--ink)}
   .askcard{background:var(--sheet);border:1px solid var(--soft);border-radius:10px;padding:1.6rem 1.6rem 1.1rem;box-shadow:0 1px 2px rgba(27,42,65,.05),0 8px 24px -12px rgba(27,42,65,.18)}
   .askcard .sechead{margin-bottom:1rem}
@@ -228,15 +233,21 @@
     return `<tr><th scope="row">${esc(h)}</th><td>${pro.length+cr.length}</td><td style="color:var(--pro);font-weight:600">${pro.length}</td><td style="color:var(--crit)">${cr.length}</td><td>${proR.length?`${pct(pb,proR.length)}% <span class="note">(${pb} of ${proR.length})</span>`:"—"}</td><td class="opt">${pct(ob,oth.length)}% <span class="note">(${ob} of ${oth.length})</span></td></tr>`;
   }).join("");
 
+  // share helpers
+  const XI='<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>';
+  const cPath=r=>`/${r.verdict.toLowerCase()}/${r.speaker.trim().split(/\s+/).pop().toLowerCase().replace(/[^a-z]/g,"")}-${r.id.slice(4)}`;
+  const cUrl=r=>"https://allin.fan"+cPath(r);
+  const xLine=r=>`${r.verdict.toUpperCase()}: ${r.speaker} on All-In (${fmtDate(r.date)})`;
+  const xHref=r=>`https://x.com/intent/post?text=${encodeURIComponent(xLine(r))}&url=${encodeURIComponent(cUrl(r))}`;
   // predictions
   const today=new Date().toISOString().slice(0,10);
   const days=d=>Math.round((Date.parse(d)-Date.parse(today))/864e5);
   const ruleText=e=>{ const m=(e||"").match(/(Rule \(signed off[^)]*\):.*|Resolves.*|Resolved:.*)/); return m?m[1]:e; };
   const predCard=r=>{
     const d=r.target?days(r.target):null;
-    const due = r.verdict==="Pending" ? (d===null?"":d<0?`Due ${fmtDate(r.target)} · being scored`:d===0?"Due today":`Due ${fmtDate(r.target)} · ${d} days`) : `Scored <span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span>`;
+    const due = r.verdict==="Pending" ? (d===null?"":d<0?`Due ${fmtDate(r.target)} · being scored`:d===0?"Due today":`Due ${fmtDate(r.target)} · ${d} day${d===1?"":"s"}`) : `Scored <span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span>`;
     return `<article class="pred"><div class="meta"><span class="who" style="color:var(--ink)">${esc(r.speaker)}</span><span>said ${fmtDate(r.date)}</span></div>
-      <p><strong>${esc(r.claim)}</strong></p><p class="rule">${esc(ruleText(r.evidence))}</p><p class="due">${due}</p></article>`;
+      <p><strong>${esc(r.claim)}</strong></p><p class="rule">${esc(ruleText(r.evidence))}</p><div class="pfoot"><p class="due">${due}</p><a class="xmini" href="${esc(xHref(r))}" target="_blank" rel="noopener" aria-label="Post this prediction on X" title="Post on X">${XI}</a></div></article>`;
   };
   openP.sort((a,b)=>(a.target||"9").localeCompare(b.target||"9"));
   $("open").innerHTML=openP.map(predCard).join("")||'<p class="note">No open predictions.</p>';
@@ -248,11 +259,6 @@
   [...new Set(rows.map(r=>r.category).filter(Boolean))].sort().forEach(c=>$("f-cat").insertAdjacentHTML("beforeend",`<option>${esc(c)}</option>`));
   const order={False:0,Misleading:1,Unverified:2,Pending:3,Accurate:4};
   let shown=25;
-  const XI='<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>';
-  const cPath=r=>`/${r.verdict.toLowerCase()}/${r.speaker.trim().split(/\s+/).pop().toLowerCase().replace(/[^a-z]/g,"")}-${r.id.slice(4)}`;
-  const cUrl=r=>"https://allin.fan"+cPath(r);
-  const xLine=r=>`${r.verdict.toUpperCase()}: ${r.speaker} on All-In (${fmtDate(r.date)})`;
-  const xHref=r=>`https://x.com/intent/post?text=${encodeURIComponent(xLine(r))}&url=${encodeURIComponent(cUrl(r))}`;
   document.addEventListener("click",async e=>{const b=e.target.closest("[data-copy]"); if(!b) return;
     try{await navigator.clipboard.writeText(b.dataset.copy); b.textContent="Copied"; setTimeout(()=>b.textContent=b.dataset.label,1800);}catch(err){prompt("Copy this link",b.dataset.copy);}});
   function entry(r){
