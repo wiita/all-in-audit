@@ -19,14 +19,14 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,su
 
 header.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.5rem 1.5rem;padding:1.4rem 0 0;font-family:var(--sans);font-size:.92rem;color:var(--pencil)}
 header.top strong a{color:var(--ink);font-weight:600;letter-spacing:-.01em;text-decoration:none}
-header.top nav{display:flex;flex-wrap:wrap;gap:.25rem 1.25rem}
-header.top nav a{text-decoration:none}
+header.top nav{display:flex;flex-wrap:wrap;gap:.25rem 1.4rem}
+header.top nav a{text-decoration:none;color:var(--ink);font-weight:500;font-size:1rem}
 header.top nav a:hover,header.top nav a[aria-current]{color:var(--ink);text-decoration:underline}
 
 h1{font-weight:600;font-size:clamp(2rem,5vw,3.4rem);line-height:1.05;letter-spacing:-.035em;margin:0 0 1.1rem;text-wrap:balance}
 h2{font-weight:600;font-size:clamp(1.35rem,2.6vw,1.75rem);line-height:1.2;letter-spacing:-.02em;margin:0 0 .4rem;text-wrap:balance}
 h3{font-size:1rem;font-weight:600;margin:0}
-.kicker{font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--pencil);margin:0 0 .5rem}
+.kicker{font-family:var(--mono);font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fal);margin:0 0 .5rem}
 .lede{font-size:1.12rem;line-height:1.6;color:#33445C;margin:0;max-width:40rem}
 .note{font-family:var(--sans);font-size:.88rem;color:var(--pencil);max-width:46rem}
 section{padding:2.75rem 0 0}
@@ -39,7 +39,7 @@ section{padding:2.75rem 0 0}
 
 table.ledger{width:100%;border-collapse:collapse;background:var(--sheet);font-family:var(--sans);font-variant-numeric:tabular-nums;border:1px solid var(--soft)}
 .ledger th,.ledger td{padding:.8rem .9rem;text-align:right;border-bottom:1px solid var(--soft);font-size:.98rem;white-space:nowrap}
-.ledger thead th{font-weight:500;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--pencil);border-bottom:1px solid var(--ink);vertical-align:bottom;white-space:normal}
+.ledger thead th{font-weight:600;font-size:.74rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);vertical-align:bottom;white-space:normal}
 .ledger th[scope=row]{text-align:left;font-size:.98rem;font-weight:500;color:var(--ink)}
 .ledger thead th:first-child{text-align:left}
 .ledger tbody tr:last-child th,.ledger tbody tr:last-child td{border-bottom:0}

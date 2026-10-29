@@ -35,6 +35,11 @@
   .due{font-family:var(--sans);font-weight:600;color:var(--ink)}
   .ask{display:flex;gap:.5rem;margin-bottom:.4rem}
   .ask input{flex:1 1 auto;min-width:0;font-size:1rem;padding:.65rem .8rem}
+  .hero-ask{margin-top:1.8rem;max-width:40rem}
+  .hero-ask input{padding:.8rem .9rem;font-size:1.05rem}
+  .track{display:inline-block;width:80px;text-align:left;vertical-align:middle;margin-right:.6rem;line-height:0}
+  .track .bar{margin-right:0}
+  #ask-sum{margin-bottom:1.1rem}
   .asknote{font-size:.82rem;color:var(--pencil);margin:0 0 1.1rem}
   .asknote .tag{display:inline-block;background:var(--sheet);border:1px solid var(--soft);border-radius:3px;padding:0 .4em;margin:0 .2em .2em 0;color:var(--ink)}
   .asknote button{font:inherit;color:var(--ink);background:none;border:0;text-decoration:underline;cursor:pointer;padding:0}
@@ -73,6 +78,12 @@
     <section class="hero" aria-labelledby="h">
       <h1 id="h">Four besties. Every checkable claim, checked.</h1>
       <p class="lede">An independent record of what the All-In Podcast hosts say about markets, tech and policy, measured against the evidence, with predictions tracked until they come due. <strong>Statements are quoted word for word, with the timestamp and the sources behind every verdict.</strong></p>
+      <form class="ask hero-ask" id="ask" role="search" autocomplete="off">
+        <label for="ask-q" class="sr-only">Ask the record</label>
+        <input id="ask-q" type="search" maxlength="200" placeholder="Ask, e.g. “What did Sacks get wrong on immigration?”">
+        <button class="btn" type="submit" id="ask-go">Ask</button>
+      </form>
+      <p class="asknote" id="ask-msg" aria-live="polite">Your question is turned into filters. Results are always the audit's own entries, never generated text.</p>
       <div class="stats" id="stats" aria-live="polite"><div><b>…</b><span>Loading the record</span></div></div>
     </section>
 
@@ -130,12 +141,7 @@
         <p class="kicker">The record</p>
         <h2 id="cl-h">All claims</h2>
       </div>
-      <form class="ask" id="ask" role="search" autocomplete="off">
-        <label for="ask-q" class="sr-only">Ask the record</label>
-        <input id="ask-q" type="search" maxlength="200" placeholder="Ask the record, e.g. “What did Sacks get wrong about immigration?”">
-        <button class="btn" type="submit" id="ask-go">Ask</button>
-      </form>
-      <p class="asknote" id="ask-msg" aria-live="polite">Your question is turned into filters. Results are always the audit's own entries, never generated text.</p>
+      <p class="asknote" id="ask-sum" hidden></p>
       <div class="filters" role="search">
         <label for="f-host">Host</label>
         <select id="f-host"><option value="">All</option></select>
@@ -186,7 +192,7 @@
     return {h,n:rt.length,a:c("Accurate"),m:c("Misleading"),f:c("False"),u:mine.filter(r=>r.verdict==="Unverified").length,p:mine.filter(r=>r.verdict==="Pending").length};
   }).sort((x,y)=>pct(y.f,y.n)-pct(x.f,x.n)||pct(y.m,y.n)-pct(x.m,x.n));
   const maxF=Math.max(...sc.map(s=>pct(s.f,s.n)),1);
-  $("score").tBodies[0].innerHTML=sc.map(s=>`<tr><th scope="row">${esc(s.h)}</th><td>${s.n}</td><td class="acc">${s.a}</td><td class="mis">${s.m}</td><td class="fal">${s.f}</td><td class="fal"><span class="bar" style="width:${Math.round(60*pct(s.f,s.n)/maxF)}px" aria-hidden="true"></span><span class="pctv">${pct(s.f,s.n)}%</span></td><td class="opt">${s.u}</td><td class="opt">${s.p}</td></tr>`).join("");
+  $("score").tBodies[0].innerHTML=sc.map(s=>`<tr><th scope="row">${esc(s.h)}</th><td>${s.n}</td><td class="acc">${s.a}</td><td class="mis">${s.m}</td><td class="fal">${s.f}</td><td class="fal"><span class="track" aria-hidden="true"><span class="bar" style="width:${Math.max(2,Math.round(80*pct(s.f,s.n)/maxF))}px"></span></span><span class="pctv">${pct(s.f,s.n)}%</span></td><td class="opt">${s.u}</td><td class="opt">${s.p}</td></tr>`).join("");
 
   // lean
   const bad=r=>r.verdict==="False"||r.verdict==="Misleading";
@@ -243,7 +249,7 @@
   }
   let ask=null;
   const NOTE=$("ask-msg").innerHTML;
-  function clearAsk(){ ask=null; $("ask-msg").innerHTML=NOTE; }
+  function clearAsk(){ ask=null; $("ask-msg").innerHTML=NOTE; $("ask-sum").hidden=true; $("ask-sum").innerHTML=""; }
   ["f-host","f-verdict","f-lean","f-cat"].forEach(id=>$(id).addEventListener("change",()=>{clearAsk();render(true);}));
   $("f-q").addEventListener("input",()=>{clearAsk();render(true);});
   $("ask").addEventListener("submit",async e=>{
@@ -257,10 +263,11 @@
       if(d.off_topic){ $("ask-msg").textContent="Ask searches what the four hosts said on the show. Try a question about a host, a topic or a verdict."; return; }
       ask=d; ["f-host","f-verdict","f-lean","f-cat"].forEach(id=>$(id).value=""); $("f-q").value="";
       const tags=[...d.hosts,...d.verdicts,d.lean,...d.categories,d.predictions_only?"Predictions":"",...d.keywords.map(k=>"“"+k+"”")].filter(Boolean);
-      $("ask-msg").innerHTML=`Showing: ${tags.length?tags.map(t=>`<span class="tag">${esc(t)}</span>`).join(""):"everything"} <button type="button" id="ask-clear">Clear</button>`;
+      $("ask-msg").innerHTML=NOTE;
+      $("ask-sum").innerHTML=`<b>“${esc(q)}”</b> · Showing: ${tags.length?tags.map(t=>`<span class="tag">${esc(t)}</span>`).join(""):"everything"} <button type="button" id="ask-clear">Clear</button>`; $("ask-sum").hidden=false;
       $("ask-clear").addEventListener("click",()=>{clearAsk();$("ask-q").value="";render(true);});
       render(true);
-      document.getElementById("count").scrollIntoView({behavior:"smooth",block:"start"});
+      document.getElementById("cl-h").scrollIntoView({behavior:"smooth",block:"start"});
     }catch(err){ $("ask-msg").textContent="Ask is unavailable right now."; }
     finally{ $("ask-go").disabled=false; }
   });
