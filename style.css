@@ -17,11 +17,12 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,su
 [hidden]{display:none!important}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-header.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.5rem 1.5rem;padding:1.4rem 0 0;font-family:var(--sans);font-size:.92rem;color:var(--pencil)}
-header.top strong a{color:var(--ink);font-weight:600;letter-spacing:-.01em;text-decoration:none}
-header.top nav{display:flex;flex-wrap:wrap;gap:.25rem 1.4rem}
-header.top nav a{text-decoration:none;color:var(--ink);font-weight:500;font-size:1rem}
-header.top nav a:hover,header.top nav a[aria-current]{color:var(--ink);text-decoration:underline}
+header.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.5rem 1.5rem;padding:1.2rem 0 1.1rem;border-bottom:1px solid var(--soft);font-family:var(--sans);font-size:.92rem;color:var(--pencil)}
+header.top strong a{color:var(--ink);font-weight:650;font-size:1rem;letter-spacing:-.015em;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem}
+header.top strong a::before{content:"";width:.62rem;height:.62rem;border-radius:2px;background:var(--fal)}
+header.top nav{display:flex;flex-wrap:wrap;gap:.15rem .35rem}
+header.top nav a{text-decoration:none;color:#33445C;font-weight:500;font-size:.93rem;padding:.35rem .65rem;border-radius:6px;transition:background .15s,color .15s}
+header.top nav a:hover,header.top nav a[aria-current]{color:var(--ink);background:var(--soft)}
 
 h1{font-weight:600;font-size:clamp(2rem,5vw,3.4rem);line-height:1.05;letter-spacing:-.035em;margin:0 0 1.1rem;text-wrap:balance}
 h2{font-weight:600;font-size:clamp(1.35rem,2.6vw,1.75rem);line-height:1.2;letter-spacing:-.02em;margin:0 0 .4rem;text-wrap:balance}
