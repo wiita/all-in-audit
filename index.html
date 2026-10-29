@@ -13,7 +13,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <style>
   .hero{padding:4rem 0 1rem}
@@ -26,6 +26,11 @@
   .stats b{font-size:2.3rem;font-weight:500;letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums}
   .stats span{font-size:.7rem;color:var(--pencil);text-transform:uppercase;letter-spacing:.09em;margin-top:.5rem;white-space:nowrap}
   @media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,auto));gap:1.1rem 1.8rem}.stats b{font-size:1.9rem}.stats span{white-space:normal}.statrow{align-items:flex-start;gap:1rem}}
+  .motto{flex:0 1 auto;margin:0;text-align:right}
+  .motto blockquote{margin:0;font-family:"Cinzel",Georgia,"Times New Roman",serif;font-weight:600;font-size:1.35rem;line-height:1.15;letter-spacing:.12em;white-space:nowrap;text-transform:uppercase;color:var(--ink)}
+  .motto figcaption{margin-top:.45rem;font-size:.78rem;color:var(--pencil);font-style:italic}
+  .motto figcaption span{font-style:normal}
+  @media (max-width:860px){.statrow{flex-direction:column;align-items:flex-start}.motto{text-align:left}}
   td.fal{color:var(--fal);font-weight:600}
   td.mis{color:var(--mis)}
   td.acc{color:var(--acc)}
@@ -87,6 +92,7 @@
       <p class="lede">An independent record of what the All-In Podcast hosts say about markets, tech and policy, measured against the evidence, with predictions tracked until they come due. <strong>Statements are quoted word for word, with the timestamp and the sources behind every verdict.</strong></p>
       <div class="statrow">
         <div class="stats" id="stats" aria-live="polite"><div><b>…</b><span>Loading the record</span></div></div>
+        <figure class="motto"><blockquote lang="la">Vincit omnia veritas</blockquote><figcaption>Truth conquers all. <span>— Unknown</span></figcaption></figure>
       </div>
     </section>
 
