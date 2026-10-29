@@ -53,3 +53,6 @@ footer{border-top:1px solid var(--rule);margin-top:3.5rem;padding:1.4rem 0 3rem;
 .btn.ghost{background:transparent;color:var(--ink)}
 select,input[type=search]{font-family:var(--sans);font-size:.92rem;color:var(--ink);background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:.45rem .55rem}
 .loading{font-family:var(--sans);color:var(--pencil)}
+header.top nav a.xlink{display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;padding:0;margin-left:.35rem;border-radius:50%;background:var(--ink);color:var(--sheet)}
+header.top nav a.xlink:hover{background:#000;color:#fff}
+a.xfoot{display:inline-flex;align-items:center;gap:.25rem}
