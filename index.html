@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The All-In Audit</title>
-<meta name="description" content="An independent, sourced audit of the factual claims and predictions made on the All-In Podcast. Opening soon.">
+<meta name="description" content="An independent, sourced audit of the factual claims and predictions made by the hosts of the All-In Podcast.">
 <meta property="og:title" content="The All-In Audit">
-<meta property="og:description" content="Every checkable claim and prediction on the All-In Podcast, checked against the public record. Opening soon.">
+<meta property="og:description" content="Every checkable claim and prediction by the All-In Podcast hosts, checked against the public record.">
 <meta property="og:url" content="https://allin.fan">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
@@ -14,173 +14,220 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Archivo:wdth,wght@75..125,400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
 <style>
-  :root {
-    --paper: #E8ECF0;
-    --sheet: #F6F8FA;
-    --ink: #1B2A41;
-    --pencil: #5E6B7A;
-    --rule: #A9BDD1;
-    --red: #B3122B;
-    --serif: "Spectral", Georgia, serif;
-    --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  }
-  * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    margin: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--serif);
-    font-size: 1.125rem;
-    line-height: 1.6;
-  }
-  a { color: inherit; text-underline-offset: 3px; }
-  a:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
-
-  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .wrap { max-width: 60rem; margin: 0 auto; padding: 0 1.25rem; }
-
-  header.top {
-    display: flex; justify-content: space-between; align-items: baseline;
-    padding: 1.5rem 0 0;
-    font-family: var(--sans); font-size: .9rem; color: var(--pencil);
-  }
-  header.top strong { color: var(--ink); font-weight: 700; font-stretch: 112%; letter-spacing: .01em; }
-
-  .hero { padding: 4.5rem 0 3rem; max-width: 44rem; }
-  h1 {
-    font-weight: 700; font-size: clamp(2.4rem, 6vw, 4.2rem);
-    line-height: 1.04; letter-spacing: -.015em; margin: 0 0 1.5rem;
-  }
-  .lede { font-size: 1.3rem; line-height: 1.5; margin: 0; max-width: 36rem; }
-
-  /* The ledger: the one bold element */
-  .ledger-wrap { position: relative; margin: 1rem 0 4rem; }
-  .ledger {
-    width: 100%; border-collapse: collapse; background: var(--sheet);
-    font-family: var(--sans); font-variant-numeric: tabular-nums;
-    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(27,42,65,.45);
-  }
-  .ledger caption {
-    text-align: left; font-family: var(--serif); font-style: italic;
-    color: var(--pencil); padding: 0 0 .75rem; font-size: 1rem;
-  }
-  .ledger th, .ledger td {
-    padding: .95rem 1rem; text-align: right; border-bottom: 1px solid var(--rule);
-    font-size: 1rem;
-  }
-  .ledger thead th {
-    font-weight: 600; font-size: .85rem; color: var(--pencil);
-    border-bottom: 2px solid var(--ink); vertical-align: bottom;
-  }
-  .ledger th[scope=row], .ledger thead th:first-child {
-    text-align: left; font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink);
-  }
-  .ledger thead th:first-child { font-family: var(--sans); font-size: .85rem; color: var(--pencil); }
-  .ledger td { color: var(--rule); }
-  .ledger tbody tr:last-child th, .ledger tbody tr:last-child td { border-bottom: 0; }
-
-  .stamp {
-    position: absolute; right: 7%; top: 52%;
-    transform: translateY(-50%) rotate(-9deg);
-    font-family: var(--sans); font-weight: 700; font-stretch: 120%;
-    font-size: clamp(1.1rem, 3.2vw, 1.9rem); letter-spacing: .06em; line-height: 1.1;
-    color: var(--red); text-align: center;
-    border: 3px solid var(--red); border-radius: 6px; padding: .55em .9em .45em;
-    background: rgba(246,248,250,.55);
-    mix-blend-mode: multiply; opacity: .9;
-    pointer-events: none;
-  }
-  .stamp small { display: block; font-size: .45em; letter-spacing: .12em; font-weight: 600; margin-top: .25em; }
-  @media (prefers-reduced-motion: no-preference) {
-    .stamp { animation: thud .5s cubic-bezier(.2,.9,.3,1.2) .6s both; }
-    @keyframes thud {
-      from { opacity: 0; transform: translateY(-50%) rotate(-9deg) scale(1.6); }
-      to   { opacity: .9; transform: translateY(-50%) rotate(-9deg) scale(1); }
-    }
-  }
-
-  .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); gap: 2rem 4rem; padding: 0 0 4rem; max-width: 50rem; }
-  .rules h2 { font-size: 1.15rem; margin: 0 0 .4rem; font-weight: 700; }
-  .rules p { margin: 0; color: #33445C; font-size: 1.02rem; }
-
-  footer {
-    border-top: 1px solid var(--rule); padding: 1.5rem 0 3rem;
-    font-family: var(--sans); font-size: .9rem; color: var(--pencil);
-    display: flex; flex-wrap: wrap; gap: .5rem 2rem; justify-content: space-between;
-  }
-
-  @media (max-width: 640px) {
-    .hero { padding: 3rem 0 2rem; }
-    .lede { font-size: 1.15rem; }
-    .ledger th, .ledger td { padding: .75rem .5rem; font-size: .9rem; }
-    .ledger .opt { display: none; }
-    .stamp { right: 4%; }
-  }
+  .hero{padding:3.5rem 0 1rem;max-width:46rem}
+  .hero .lede strong{font-weight:600}
+  .stats{display:flex;flex-wrap:wrap;gap:.75rem 2.5rem;margin-top:1.6rem;font-family:var(--sans)}
+  .stats div{display:flex;flex-direction:column}
+  .stats b{font-size:2rem;font-weight:700;font-stretch:115%;line-height:1;font-variant-numeric:tabular-nums}
+  .stats span{font-size:.8rem;color:var(--pencil);text-transform:uppercase;letter-spacing:.06em;margin-top:.3rem}
+  td.fal{color:var(--fal);font-weight:700}
+  td.mis{color:var(--mis)}
+  td.acc{color:var(--acc)}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:1.25rem}
+  .pred{background:var(--sheet);border:1px solid var(--soft);border-radius:3px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem;min-width:0}
+  .pred .meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.4rem;font-family:var(--sans);font-size:.8rem;color:var(--pencil);font-variant-numeric:tabular-nums}
+  .pred p{margin:0}
+  .pred .who{font-weight:600}
+  .pred .rule{font-size:.9rem;color:#33445C}
+  .due{font-family:var(--sans);font-weight:700;color:var(--ink)}
+  .filters{display:flex;flex-wrap:wrap;gap:.6rem .8rem;align-items:center;margin-bottom:1rem}
+  .filters label{font-family:var(--sans);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--pencil)}
+  .filters input[type=search]{flex:1 1 14rem;min-width:0}
+  .count{font-family:var(--sans);font-size:.85rem;color:var(--pencil);margin:0 0 .8rem}
+  .entries{display:flex;flex-direction:column;gap:.9rem}
+  .entry{background:var(--sheet);border:1px solid var(--soft);border-left:4px solid var(--rule);border-radius:2px;padding:1rem 1.15rem;display:flex;flex-direction:column;gap:.5rem;min-width:0}
+  .entry.e-Accurate{border-left-color:var(--acc)} .entry.e-Misleading{border-left-color:var(--mis)} .entry.e-False{border-left-color:var(--fal)} .entry.e-Pending{border-left-color:var(--pen)}
+  .entry .meta{display:flex;flex-wrap:wrap;gap:.3rem 1rem;align-items:center;font-family:var(--sans);font-size:.8rem;color:var(--pencil);font-variant-numeric:tabular-nums}
+  .entry .meta .who{color:var(--ink);font-weight:700;font-size:.92rem}
+  .entry blockquote{margin:0;font-style:italic;font-size:1.08rem;line-height:1.45;overflow-wrap:anywhere}
+  .entry .claim{margin:0;font-size:.97rem;overflow-wrap:anywhere}
+  .entry details summary{cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600;color:var(--ink)}
+  .entry details[open] summary{margin-bottom:.4rem}
+  .entry details p{margin:0 0 .45rem;font-size:.95rem;overflow-wrap:anywhere}
+  .srcs{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-family:var(--sans);font-size:.82rem;overflow-wrap:anywhere}
+  .more{margin-top:1.2rem}
+  .game{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;background:var(--ink);color:var(--sheet);border-radius:3px;padding:1.4rem 1.5rem}
+  .game h2{color:var(--sheet)}
+  .game p{margin:0;max-width:34rem;color:#C9D4E0}
+  .game .btn{background:var(--sheet);color:var(--ink);border-color:var(--sheet)}
+  .leanpill{font-family:var(--sans);font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+  @media (max-width:640px){ .ledger th,.ledger td{padding:.65rem .5rem;font-size:.88rem} .opt{display:none} .hero{padding-top:2.5rem} }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <strong>The All-In Audit</strong>
-    <span>allin.fan</span>
+    <strong><a href="/">The All-In Audit</a></strong>
+    <nav aria-label="Site"><a href="#scorecard">Scorecard</a><a href="#predictions">Predictions</a><a href="#claims">All claims</a><a href="/game">Game</a><a href="/methodology">Methodology</a></nav>
   </header>
 
   <main>
-    <section class="hero">
-      <h1>Four besties. Hundreds of episodes. Every checkable claim, checked.</h1>
-      <p class="lede">The All-In Podcast shapes how a lot of people think about markets, tech and policy. This is an independent record of what its hosts have said, measured against the evidence, with predictions tracked until they come due.</p>
+    <section class="hero" aria-labelledby="h">
+      <h1 id="h">Four besties. Every checkable claim, checked.</h1>
+      <p class="lede">An independent record of what the All-In Podcast hosts say about markets, tech and policy, measured against the evidence, with predictions tracked until they come due. <strong>Statements are quoted word for word, with the timestamp and the sources behind every verdict.</strong></p>
+      <div class="stats" id="stats" aria-live="polite"><div><b>…</b><span>Loading the record</span></div></div>
     </section>
 
-    <div class="ledger-wrap">
-      <table class="ledger">
-        <caption>Scorecard, by host</caption>
-        <thead>
-          <tr>
-            <th scope="col">Host</th>
-            <th scope="col">Claims checked</th>
-            <th scope="col">Accurate</th>
-            <th scope="col" class="opt">Misleading</th>
-            <th scope="col">False</th>
-            <th scope="col" class="opt">Predictions due</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><th scope="row">Chamath Palihapitiya</th><td>—</td><td>—</td><td class="opt">—</td><td>—</td><td class="opt">—</td></tr>
-          <tr><th scope="row">David Sacks</th><td>—</td><td>—</td><td class="opt">—</td><td>—</td><td class="opt">—</td></tr>
-          <tr><th scope="row">David Friedberg</th><td>—</td><td>—</td><td class="opt">—</td><td>—</td><td class="opt">—</td></tr>
-          <tr><th scope="row">Jason Calacanis</th><td>—</td><td>—</td><td class="opt">—</td><td>—</td><td class="opt">—</td></tr>
-        </tbody>
-      </table>
-      <div class="stamp" aria-hidden="true">Audit in progress<small>Opening soon</small></div>
-    </div>
-    <p class="sr-only">The scorecard is empty until the audit opens.</p>
+    <section id="scorecard" aria-labelledby="sc-h">
+      <div class="sechead">
+        <p class="kicker">Scorecard</p>
+        <h2 id="sc-h">Who gets it wrong most often</h2>
+        <p>Rated claims only (Accurate, Misleading, False). Unverified claims and open predictions are counted separately. Sorted by the share rated False.</p>
+      </div>
+      <div class="tablebox">
+        <table class="ledger" id="score">
+          <thead><tr><th scope="col">Host</th><th scope="col">Rated</th><th scope="col">Accurate</th><th scope="col">Misleading</th><th scope="col">False</th><th scope="col">False rate</th><th scope="col" class="opt">Unverified</th><th scope="col" class="opt">Open predictions</th></tr></thead>
+          <tbody><tr><td colspan="8" class="loading" style="text-align:left">Loading…</td></tr></tbody>
+        </table>
+      </div>
+      <p class="note">Which claims get checked affects these numbers. A host who mostly relays news (earnings, filings, deal terms) has more easy-to-verify claims than one who argues a thesis. See the <a href="/methodology">methodology</a>.</p>
+    </section>
 
-    <section class="rules" aria-label="How the audit works">
-      <div>
-        <h2>Quoted, not paraphrased</h2>
-        <p>Every entry carries the speaker's exact words and the moment in the episode they said them.</p>
+    <section id="lean" aria-labelledby="ln-h">
+      <div class="sechead">
+        <p class="kicker">Politics</p>
+        <h2 id="ln-h">How often they echo the administration, and how those claims hold up</h2>
+        <p>Every claim is tagged for whether it lines up with the US administration in office (currently the Trump administration): <span class="leanpill l-Pro-admin">Pro-admin</span>, <span class="leanpill l-Critical">Critical</span> or Neutral. Lean describes the statement, not the person, and never changes a verdict.</p>
       </div>
-      <div>
-        <h2>Sourced, every time</h2>
-        <p>No verdict without the evidence behind it. If the record can't settle a claim, it's marked unverified rather than guessed.</p>
+      <div class="tablebox">
+        <table class="ledger" id="leantab">
+          <thead><tr><th scope="col">Host</th><th scope="col">Political claims</th><th scope="col">Pro-admin</th><th scope="col">Critical</th><th scope="col">Pro-admin claims rated Misleading or False</th><th scope="col" class="opt">All other claims rated Misleading or False</th></tr></thead>
+          <tbody><tr><td colspan="6" class="loading" style="text-align:left">Loading…</td></tr></tbody>
+        </table>
       </div>
-      <div>
-        <h2>Predictions come due</h2>
-        <p>Forecasts are logged with their deadline and checked again when the date arrives, hit or miss.</p>
+    </section>
+
+    <section id="predictions" aria-labelledby="pr-h">
+      <div class="sechead">
+        <p class="kicker">Predictions</p>
+        <h2 id="pr-h">Calls on the record, and when they come due</h2>
+        <p>Each prediction gets a scoring rule before the outcome is known. Rules aren't changed to fit the result.</p>
       </div>
-      <div>
-        <h2>Corrections are public</h2>
-        <p>If a verdict is wrong, it gets fixed in the open, with the change and the reason logged.</p>
+      <h3 style="margin-bottom:.8rem">Open</h3>
+      <div class="grid2" id="open"><p class="loading">Loading…</p></div>
+      <h3 style="margin:2rem 0 .8rem">Scored</h3>
+      <div class="grid2" id="resolved"></div>
+    </section>
+
+    <section aria-label="Game">
+      <div class="game">
+        <div><h2>Accurate or False?</h2><p>Ten real quotes from the show. Guess the verdict, then see the evidence.</p></div>
+        <a class="btn" href="/game">Play</a>
       </div>
+    </section>
+
+    <section id="claims" aria-labelledby="cl-h">
+      <div class="sechead">
+        <p class="kicker">The record</p>
+        <h2 id="cl-h">All claims</h2>
+      </div>
+      <div class="filters" role="search">
+        <label for="f-host">Host</label>
+        <select id="f-host"><option value="">All</option></select>
+        <label for="f-verdict">Verdict</label>
+        <select id="f-verdict"><option value="">All</option><option>False</option><option>Misleading</option><option>Accurate</option><option>Unverified</option><option>Pending</option></select>
+        <label for="f-lean">Lean</label>
+        <select id="f-lean"><option value="">All</option><option>Pro-admin</option><option>Critical</option><option>Neutral</option></select>
+        <label for="f-cat">Topic</label>
+        <select id="f-cat"><option value="">All</option></select>
+        <label for="f-q" class="sr-only">Search</label>
+        <input type="search" id="f-q" placeholder="Search quotes and claims">
+      </div>
+      <p class="count" id="count" aria-live="polite"></p>
+      <div class="entries" id="entries"></div>
+      <div class="more"><button class="btn ghost" id="more" type="button" hidden>Show more</button></div>
     </section>
   </main>
 
   <footer>
-    <span>An independent audit by Vita Pur. Not affiliated with the All-In Podcast.</span>
-    <span>Launching with the most recent 25 episodes.</span>
+    <span>An independent audit by Vita Pur. Not affiliated with the All-In Podcast. Quotes are short excerpts for commentary; listen to the full episodes on the show's own channels.</span>
+    <span>Spotted an error? <a href="https://github.com/wiita/all-in-audit/issues/new?template=correction.yml">Request a correction</a> · <span id="src"></span></span>
   </footer>
 </div>
+
+<script src="/app.js"></script>
+<script>
+(async function(){
+  const {load,HOSTS,RATED,esc,hostOf,fmtDate}=window.Audit;
+  const $=id=>document.getElementById(id);
+  let data;
+  try{ data=await load(); }catch(e){ $("stats").innerHTML='<div><b>—</b><span>The record could not be loaded. Try again shortly.</span></div>'; return; }
+  const rows=data.rows;
+  $("src").textContent = data.source==="live" ? "Live from the audit sheet" : `Snapshot of ${data.asOf}`;
+
+  // headline stats
+  const eps=new Set(rows.map(r=>r.episode)).size;
+  const rated=rows.filter(r=>RATED.includes(r.verdict));
+  const preds=rows.filter(r=>r.type==="Prediction");
+  const openP=preds.filter(r=>r.verdict==="Pending");
+  $("stats").innerHTML=[[eps,"Episodes"],[rows.length,"Statements logged"],[rated.filter(r=>r.verdict==="False").length,"Rated False"],[rated.filter(r=>r.verdict==="Misleading").length,"Rated Misleading"],[openP.length,"Predictions pending"]]
+    .map(([n,l])=>`<div><b>${n}</b><span>${l}</span></div>`).join("");
+
+  // scorecard
+  const pct=(a,b)=>b?Math.round(100*a/b):0;
+  const sc=HOSTS.map(h=>{
+    const mine=rows.filter(r=>r.speaker===h), rt=mine.filter(r=>RATED.includes(r.verdict));
+    const c=v=>rt.filter(r=>r.verdict===v).length;
+    return {h,n:rt.length,a:c("Accurate"),m:c("Misleading"),f:c("False"),u:mine.filter(r=>r.verdict==="Unverified").length,p:mine.filter(r=>r.verdict==="Pending").length};
+  }).sort((x,y)=>pct(y.f,y.n)-pct(x.f,x.n)||pct(y.m,y.n)-pct(x.m,x.n));
+  const maxF=Math.max(...sc.map(s=>pct(s.f,s.n)),1);
+  $("score").tBodies[0].innerHTML=sc.map(s=>`<tr><th scope="row">${esc(s.h)}</th><td>${s.n}</td><td class="acc">${s.a}</td><td class="mis">${s.m}</td><td class="fal">${s.f}</td><td class="fal">${pct(s.f,s.n)}%<span class="bar" style="width:${Math.round(60*pct(s.f,s.n)/maxF)}px" aria-hidden="true"></span></td><td class="opt">${s.u}</td><td class="opt">${s.p}</td></tr>`).join("");
+
+  // lean
+  const bad=r=>r.verdict==="False"||r.verdict==="Misleading";
+  $("leantab").tBodies[0].innerHTML=HOSTS.map(h=>{
+    const mine=rows.filter(r=>r.speaker===h);
+    const pro=mine.filter(r=>r.lean==="Pro-admin"), cr=mine.filter(r=>r.lean==="Critical");
+    const proR=pro.filter(r=>RATED.includes(r.verdict)), oth=mine.filter(r=>r.lean!=="Pro-admin"&&RATED.includes(r.verdict));
+    const pb=proR.filter(bad).length, ob=oth.filter(bad).length;
+    return `<tr><th scope="row">${esc(h)}</th><td>${pro.length+cr.length}</td><td style="color:var(--pro);font-weight:700">${pro.length}</td><td style="color:var(--crit)">${cr.length}</td><td>${proR.length?`${pct(pb,proR.length)}% <span class="note">(${pb} of ${proR.length})</span>`:"—"}</td><td class="opt">${pct(ob,oth.length)}% <span class="note">(${ob} of ${oth.length})</span></td></tr>`;
+  }).join("");
+
+  // predictions
+  const today=new Date().toISOString().slice(0,10);
+  const days=d=>Math.round((Date.parse(d)-Date.parse(today))/864e5);
+  const ruleText=e=>{ const m=(e||"").match(/(Rule \(signed off[^)]*\):.*|Resolves.*|Resolved:.*)/); return m?m[1]:e; };
+  const predCard=r=>{
+    const d=r.target?days(r.target):null;
+    const due = r.verdict==="Pending" ? (d===null?"":d<0?`Due ${fmtDate(r.target)} · being scored`:d===0?"Due today":`Due ${fmtDate(r.target)} · ${d} days`) : `Scored <span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span>`;
+    return `<article class="pred"><div class="meta"><span class="who" style="color:var(--ink)">${esc(r.speaker)}</span><span>said ${fmtDate(r.date)}</span></div>
+      <p><strong>${esc(r.claim)}</strong></p><p class="rule">${esc(ruleText(r.evidence))}</p><p class="due">${due}</p></article>`;
+  };
+  openP.sort((a,b)=>(a.target||"9").localeCompare(b.target||"9"));
+  $("open").innerHTML=openP.map(predCard).join("")||'<p class="note">No open predictions.</p>';
+  const resolved=preds.filter(r=>r.verdict!=="Pending").sort((a,b)=>b.date.localeCompare(a.date));
+  $("resolved").innerHTML=resolved.map(predCard).join("")||'<p class="note">None scored yet.</p>';
+
+  // explorer
+  HOSTS.forEach(h=>$("f-host").insertAdjacentHTML("beforeend",`<option>${esc(h)}</option>`));
+  [...new Set(rows.map(r=>r.category).filter(Boolean))].sort().forEach(c=>$("f-cat").insertAdjacentHTML("beforeend",`<option>${esc(c)}</option>`));
+  const order={False:0,Misleading:1,Unverified:2,Pending:3,Accurate:4};
+  let shown=25;
+  function entry(r){
+    const src=r.sources.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(hostOf(u))}</a>`).join("");
+    return `<article class="entry e-${esc(r.verdict)}">
+      <div class="meta"><span class="who">${esc(r.speaker)}</span><span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span>${r.lean!=="Neutral"?`<span class="leanpill l-${esc(r.lean)}">${esc(r.lean)}</span>`:""}<span><a href="${esc(r.url)}" target="_blank" rel="noopener">${fmtDate(r.date)}</a> at ${esc(r.ts)}</span><span>${esc(r.category)}</span><span>${esc(r.id)}</span></div>
+      <blockquote>“${esc(r.quote)}”</blockquote>
+      <p class="claim"><strong>Claim:</strong> ${esc(r.claim)}</p>
+      <details><summary>Evidence and sources</summary><p>${esc(r.evidence)}</p>${r.notes?`<p class="note">${esc(r.notes)}</p>`:""}<div class="srcs">${src}</div></details>
+    </article>`;
+  }
+  function render(reset){
+    if(reset) shown=25;
+    const h=$("f-host").value, v=$("f-verdict").value, l=$("f-lean").value, c=$("f-cat").value, q=$("f-q").value.trim().toLowerCase();
+    const list=rows.filter(r=>(!h||r.speaker===h)&&(!v||r.verdict===v)&&(!l||r.lean===l)&&(!c||r.category===c)&&(!q||(r.quote+" "+r.claim+" "+r.evidence).toLowerCase().includes(q)))
+      .sort((a,b)=>(order[a.verdict]??9)-(order[b.verdict]??9)||b.date.localeCompare(a.date));
+    $("count").textContent=`${list.length} statement${list.length===1?"":"s"}${list.length>shown?`, showing ${shown}`:""}`;
+    $("entries").innerHTML=list.slice(0,shown).map(entry).join("");
+    $("more").hidden=list.length<=shown;
+  }
+  ["f-host","f-verdict","f-lean","f-cat"].forEach(id=>$(id).addEventListener("change",()=>render(true)));
+  $("f-q").addEventListener("input",()=>render(true));
+  $("more").addEventListener("click",()=>{shown+=25;render(false);});
+  render(true);
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Accurate or False? · The All-In Audit</title>
+<meta name="description" content="Ten real quotes from the All-In Podcast hosts. Guess the verdict, then see the evidence.">
+<meta property="og:title" content="Accurate or False?">
+<meta property="og:description" content="Ten real quotes from the All-In Podcast hosts. Guess the verdict, then see the evidence.">
+<meta property="og:url" content="https://allin.fan/game">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Archivo:wdth,wght@75..125,400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+  .stage{max-width:44rem;display:flex;flex-direction:column;gap:1.1rem;padding-top:2.5rem}
+  .bar2{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:.75rem}
+  .score{font-family:var(--sans);font-variant-numeric:tabular-nums;font-size:.9rem;color:var(--pencil);display:flex;gap:1.1rem}
+  .score b{color:var(--ink)}
+  .controls{display:flex;flex-wrap:wrap;gap:.5rem .7rem;align-items:center}
+  .controls label{font-family:var(--sans);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--pencil)}
+  .progress{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}
+  .progress i{height:6px;border-radius:1px;background:var(--soft)}
+  .progress i.ok{background:var(--acc)} .progress i.no{background:var(--fal)} .progress i.now{background:var(--ink)}
+  .file{background:var(--sheet);border:1px solid var(--soft);border-radius:3px;position:relative;overflow:hidden;box-shadow:0 1px 0 var(--rule),0 18px 40px -28px rgba(27,42,65,.45)}
+  .tab{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem;padding:.6rem 1.1rem;border-bottom:1px dashed var(--rule);font-family:var(--sans);font-size:.78rem;color:var(--pencil);font-variant-numeric:tabular-nums}
+  .body{padding:1.3rem 1.3rem 1.4rem;display:flex;flex-direction:column;gap:.9rem;min-width:0}
+  .who{font-family:var(--sans);font-weight:700;font-stretch:112%;font-size:1.25rem;margin:0}
+  .ep{font-size:.9rem;color:var(--pencil);margin:0}
+  blockquote{margin:0;font-size:clamp(1.15rem,3.2vw,1.4rem);line-height:1.42;font-style:italic;border-left:3px solid var(--ink);padding-left:.9rem;overflow-wrap:anywhere}
+  .claim{margin:0;font-size:.98rem}
+  .stamps{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+  .stamp{cursor:pointer;border:2px solid currentColor;background:transparent;border-radius:5px;padding:.75rem .3rem;font-family:var(--sans);font-weight:700;font-stretch:118%;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase}
+  .stamp:hover{background:color-mix(in srgb,currentColor 8%,transparent)}
+  .stamp[disabled]{cursor:default;opacity:.4}
+  .stamp.picked{opacity:1;background:color-mix(in srgb,currentColor 12%,transparent)}
+  .mark{position:absolute;right:1.1rem;top:3.2rem;transform:rotate(-9deg);font-family:var(--sans);font-weight:700;font-stretch:120%;font-size:clamp(1.4rem,5vw,2.1rem);letter-spacing:.07em;text-transform:uppercase;border:3px solid currentColor;border-radius:6px;padding:.2em .6em;opacity:.9;mix-blend-mode:multiply;pointer-events:none}
+  @media (prefers-reduced-motion:no-preference){.mark{animation:thud .25s ease-out}}
+  @keyframes thud{from{transform:rotate(-9deg) scale(1.6);opacity:0}to{transform:rotate(-9deg) scale(1);opacity:.9}}
+  .reveal{border-top:1px dashed var(--rule);padding-top:.9rem;display:flex;flex-direction:column;gap:.6rem;min-width:0}
+  .reveal p{margin:0;overflow-wrap:anywhere}
+  .result{font-family:var(--sans);font-weight:700;font-size:1.02rem}
+  .srcs{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-family:var(--sans);font-size:.82rem;overflow-wrap:anywhere}
+  .row{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:space-between;align-items:center}
+  .big{font-family:var(--sans);font-weight:700;font-stretch:118%;font-size:clamp(2.6rem,10vw,4rem);line-height:1;margin:0}
+  .s-Accurate{color:var(--acc)} .s-Misleading{color:var(--mis)} .s-False{color:var(--fal)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <strong><a href="/">The All-In Audit</a></strong>
+    <nav aria-label="Site"><a href="/#scorecard">Scorecard</a><a href="/#predictions">Predictions</a><a href="/#claims">All claims</a><a href="/game" aria-current="page">Game</a><a href="/methodology">Methodology</a></nav>
+  </header>
+  <main class="stage">
+    <div class="bar2">
+      <div><p class="kicker">Game</p><h1 style="margin:0">Accurate or False?</h1></div>
+      <div class="score" aria-live="polite"><span>Card <b id="rn">1</b>/10</span><span>Score <b id="sc">0</b></span><span>Streak <b id="st">0</b></span></div>
+    </div>
+    <div class="controls">
+      <label for="host">Host</label>
+      <select id="host"><option value="">All four</option></select>
+      <label for="topic">Topic</label>
+      <select id="topic"><option value="">Everything</option><option value="politics">Politics</option><option value="tech">Tech &amp; AI</option><option value="money">Markets &amp; economy</option></select>
+      <button class="btn ghost" id="restart" type="button">New round</button>
+    </div>
+    <div class="progress" id="prog" aria-hidden="true"></div>
+    <div id="stage"><p class="loading">Loading the record…</p></div>
+    <p class="note">Every card is a real statement, quoted from the episode at the timestamp shown, with the audit's verdict and sources. Decks are balanced so about a third of the cards carry each verdict; across the full record, most claims are accurate.</p>
+  </main>
+  <footer>
+    <span>An independent audit by Vita Pur. Not affiliated with the All-In Podcast.</span>
+    <span><a href="/methodology">How verdicts are decided</a></span>
+  </footer>
+</div>
+<script src="/app.js"></script>
+<script>
+(async function(){
+  const {load,HOSTS,RATED,esc,hostOf,fmtDate}=window.Audit;
+  const $=id=>document.getElementById(id), stage=$("stage");
+  let ALL;
+  try{ ALL=(await load()).rows.filter(r=>RATED.includes(r.verdict)); }catch(e){ stage.innerHTML='<p class="note">The record could not be loaded. Try again shortly.</p>'; return; }
+  HOSTS.forEach(h=>$("host").insertAdjacentHTML("beforeend",`<option>${esc(h)}</option>`));
+  const topicOf=r=>{ if(r.lean!=="Neutral"||["Politics","Policy","Geopolitics","Law","Immigration"].includes(r.category)) return "politics";
+    if(["Tech/AI","Cybersecurity","Science"].includes(r.category)) return "tech";
+    if(["Markets","Economy","Business","Energy","Labor"].includes(r.category)) return "money"; return "other"; };
+  const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+  let deck=[],idx=0,score=0,streak=0,answers=[];
+  function build(){
+    const h=$("host").value,t=$("topic").value;
+    const pool=ALL.filter(r=>(!h||r.speaker===h)&&(!t||topicOf(r)===t));
+    const by={}; RATED.forEach(v=>by[v]=shuffle(pool.filter(r=>r.verdict===v)));
+    const out=[]; let k=0;
+    while(out.length<10&&RATED.some(v=>by[v].length)){const v=RATED[k%3]; if(by[v].length) out.push(by[v].pop()); k++;}
+    return shuffle(out);
+  }
+  function prog(){
+    $("prog").innerHTML=Array.from({length:10},(_,i)=>{const a=answers[i];return `<i class="${a?(a.ok?"ok":"no"):(i===idx?"now":"")}"></i>`;}).join("");
+    $("rn").textContent=Math.min(idx+1,deck.length||10); $("sc").textContent=score; $("st").textContent=streak;
+  }
+  function card(){
+    const r=deck[idx];
+    if(!r){stage.innerHTML='<div class="file"><div class="body"><p class="who">No statements match those filters.</p></div></div>';return;}
+    stage.innerHTML=`<article class="file" id="file">
+      <div class="tab"><span>${esc(r.id)}</span><span>${fmtDate(r.date)} · at ${esc(r.ts)}</span></div>
+      <div class="body">
+        <p class="who">${esc(r.speaker)}</p>
+        <p class="ep">${esc(r.title)} · <a href="${esc(r.url)}" target="_blank" rel="noopener">episode</a></p>
+        <blockquote>“${esc(r.quote)}”</blockquote>
+        <p class="claim"><strong>Claim:</strong> ${esc(r.claim)}</p>
+        <div class="stamps" role="group" aria-label="Your verdict">${RATED.map(v=>`<button type="button" class="stamp s-${v}" data-v="${v}">${v}</button>`).join("")}</div>
+        <div id="rev"></div>
+      </div></article>`;
+    stage.querySelectorAll(".stamp").forEach(b=>b.addEventListener("click",()=>answer(b.dataset.v)));
+    prog();
+  }
+  function answer(pick){
+    const r=deck[idx],ok=pick===r.verdict;
+    if(ok){score++;streak++;}else streak=0;
+    answers[idx]={r,pick,ok};
+    stage.querySelectorAll(".stamp").forEach(b=>{b.disabled=true;if(b.dataset.v===pick)b.classList.add("picked");});
+    const m=document.createElement("div"); m.className="mark s-"+r.verdict; m.textContent=r.verdict; $("file").appendChild(m);
+    $("rev").innerHTML=`<div class="reveal">
+      <p class="result" style="color:var(--${ok?"acc":"fal"})">${ok?"Correct.":"Not quite."} The audit rated this ${esc(r.verdict)}.</p>
+      <p>${esc(r.evidence)}</p>${r.notes?`<p class="note">${esc(r.notes)}</p>`:""}
+      <div class="srcs">${r.sources.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(hostOf(u))}</a>`).join("")}</div>
+      <div class="row"><span class="note">${r.lean!=="Neutral"?"Lean: "+esc(r.lean):""}</span><button type="button" class="btn" id="next">${idx<deck.length-1?"Next statement":"See results"}</button></div></div>`;
+    prog();
+    const n=$("next"); n.focus({preventScroll:true}); n.addEventListener("click",()=>{idx++; idx<deck.length?card():results();});
+  }
+  function results(){
+    prog();
+    const hosts={}; answers.forEach(a=>{const h=hosts[a.r.speaker]||(hosts[a.r.speaker]={n:0,ok:0,fooled:0}); h.n++; if(a.ok)h.ok++; if(a.r.verdict!=="Accurate"&&a.pick==="Accurate")h.fooled++;});
+    const fooled=answers.filter(a=>a.r.verdict!=="Accurate"&&a.pick==="Accurate").length;
+    const share=`I scored ${score}/${answers.length} on Accurate or False? allin.fan/game`;
+    stage.innerHTML=`<div class="file"><div class="body">
+      <p class="kicker">Round complete</p><p class="big">${score}/${answers.length}</p>
+      <p>${fooled?`You believed ${fooled} statement${fooled>1?"s":""} the record doesn't support.`:"Nothing false got past you."}</p>
+      <div class="tablebox"><table class="ledger"><thead><tr><th scope="col">Host</th><th scope="col">Cards</th><th scope="col">You got right</th><th scope="col">Believed when wrong</th></tr></thead>
+      <tbody>${Object.entries(hosts).map(([h,v])=>`<tr><th scope="row">${esc(h)}</th><td>${v.n}</td><td>${v.ok}</td><td>${v.fooled}</td></tr>`).join("")}</tbody></table></div>
+      <div class="row"><button type="button" class="btn" id="again">Play another round</button><button type="button" class="btn ghost" id="copy">Copy score</button></div>
+      <p class="note" id="copied" aria-live="polite"></p></div></div>`;
+    $("again").addEventListener("click",start);
+    $("copy").addEventListener("click",()=>{try{navigator.clipboard.writeText(share).then(()=>$("copied").textContent="Copied.",()=>$("copied").textContent=share);}catch(e){$("copied").textContent=share;}});
+  }
+  function start(){deck=build();idx=0;score=0;streak=0;answers=[];card();}
+  $("restart").addEventListener("click",start); $("host").addEventListener("change",start); $("topic").addEventListener("change",start);
+  start();
+})();
+</script>
+</body>
+</html>
