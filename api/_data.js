@@ -55,5 +55,9 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": 
 const fmtDate = d => { if (!/^\d{4}-\d{2}-\d{2}$/.test(d || "")) return d || ""; const [y, m, dd] = d.split("-").map(Number); return new Date(Date.UTC(y, m - 1, dd)).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }); };
 const hostOf = u => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return u; } };
 const ID_RE = /^AIA-\d{8}-\d{2,3}$/;
+const VERDICT_SLUGS = ["accurate", "misleading", "false", "unverified", "pending"];
+// Shareable path that starts with the verdict, e.g. /false/sacks-20260703-10
+const pathOf = r => `/${String(r.verdict || "claim").toLowerCase()}/${String(r.speaker || "").trim().split(/\s+/).pop().toLowerCase().replace(/[^a-z]/g, "")}-${r.id.slice(4)}`;
+const idFromSlug = s => { const m = String(s || "").match(/(\d{8}-\d{2,3})$/); return m ? "AIA-" + m[1] : ""; };
 
-module.exports = { loadRows, originOf, esc, fmtDate, hostOf, ID_RE };
+module.exports = { loadRows, originOf, esc, fmtDate, hostOf, ID_RE, VERDICT_SLUGS, pathOf, idFromSlug };

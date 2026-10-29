@@ -249,9 +249,12 @@
   const order={False:0,Misleading:1,Unverified:2,Pending:3,Accurate:4};
   let shown=25;
   const XI='<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>';
-  const xHref=r=>`https://x.com/intent/post?text=${encodeURIComponent(`${r.speaker} on All-In (${fmtDate(r.date)}): rated ${r.verdict}.`)}&url=${encodeURIComponent("https://allin.fan/c/"+r.id)}&via=wiitapur`;
+  const cPath=r=>`/${r.verdict.toLowerCase()}/${r.speaker.trim().split(/\s+/).pop().toLowerCase().replace(/[^a-z]/g,"")}-${r.id.slice(4)}`;
+  const cUrl=r=>"https://allin.fan"+cPath(r);
+  const xLine=r=>`${r.verdict.toUpperCase()}: ${r.speaker} on All-In (${fmtDate(r.date)})`;
+  const xHref=r=>`https://x.com/intent/post?text=${encodeURIComponent(xLine(r))}&url=${encodeURIComponent(cUrl(r))}`;
   document.addEventListener("click",async e=>{const b=e.target.closest("[data-copy]"); if(!b) return;
-    try{await navigator.clipboard.writeText(b.dataset.copy); b.textContent="Link copied"; setTimeout(()=>b.textContent="Copy link",1800);}catch(err){prompt("Copy this link",b.dataset.copy);}});
+    try{await navigator.clipboard.writeText(b.dataset.copy); b.textContent="Copied"; setTimeout(()=>b.textContent=b.dataset.label,1800);}catch(err){prompt("Copy this link",b.dataset.copy);}});
   function entry(r){
     const src=r.sources.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(hostOf(u))}</a>`).join("");
     return `<article class="entry e-${esc(r.verdict)}">
@@ -259,7 +262,7 @@
       <blockquote>“${esc(r.quote)}”</blockquote>
       <p class="claim"><strong>Claim:</strong> ${esc(r.claim)}</p>
       <details><summary>Evidence and sources</summary><p>${esc(r.evidence)}</p>${r.notes?`<p class="note">${esc(r.notes)}</p>`:""}<div class="srcs">${src}</div></details>
-      <div class="share"><a href="/c/${esc(r.id)}">Open claim page</a><a href="${esc(xHref(r))}" target="_blank" rel="noopener">${XI} Post on X</a><button type="button" data-copy="${esc(location.origin+"/c/"+r.id)}">Copy link</button></div>
+      <div class="share"><a href="${esc(cPath(r))}">Open claim page</a><a href="${esc(xHref(r))}" target="_blank" rel="noopener">${XI} Post on X</a><button type="button" data-copy="${esc(xLine(r)+"\n"+cUrl(r))}" data-label="Copy for X">Copy for X</button><button type="button" data-copy="${esc(cUrl(r))}" data-label="Copy link">Copy link</button></div>
     </article>`;
   }
   function render(reset){

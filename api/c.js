@@ -1,5 +1,5 @@
 // Claim page: /c/<ID>. Server-rendered so link previews (X, LinkedIn, iMessage) get the title and share image.
-const { loadRows, originOf, esc, fmtDate, hostOf, ID_RE } = require("./_data");
+const { loadRows, originOf, esc, fmtDate, hostOf, ID_RE, pathOf, idFromSlug } = require("./_data");
 
 const XICON = '<svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>';
 const SITE = "https://allin.fan";
@@ -60,7 +60,7 @@ ${body}
 </div>
 <script>
 document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",async()=>{
-  try{await navigator.clipboard.writeText(b.dataset.copy);b.textContent="Link copied";b.classList.add("copied");}catch(e){prompt("Copy this link",b.dataset.copy);}
+  try{await navigator.clipboard.writeText(b.dataset.copy);b.textContent="Copied";b.classList.add("copied");}catch(e){prompt("Copy this link",b.dataset.copy);}
 }));
 </script>
 </body>
@@ -70,12 +70,13 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",a
 function mini(r) {
   return `<article class="entry e-${esc(r.verdict)}">
       <div class="meta"><span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span><span>${fmtDate(r.date)}</span><span>${esc(r.category)}</span></div>
-      <p class="claim"><a href="/c/${esc(r.id)}">${esc(r.claim)}</a></p>
+      <p class="claim"><a href="${esc(pathOf(r))}">${esc(r.claim)}</a></p>
     </article>`;
 }
 
 module.exports = async function handler(req, res) {
-  const id = String((req.query && req.query.id) || "").trim().toUpperCase();
+  const qy = req.query || {};
+  const id = qy.slug ? idFromSlug(qy.slug) : String(qy.id || "").trim().toUpperCase();
   res.setHeader("Content-Type", "text/html; charset=utf-8");
   const rows = ID_RE.test(id) ? await loadRows(originOf(req)) : [];
   const r = rows.find(x => x.id === id);
@@ -88,11 +89,15 @@ module.exports = async function handler(req, res) {
     }));
   }
 
-  const url = `${SITE}/c/${r.id}`;
-  const title = `${r.speaker}: ${r.verdict} · The All-In Audit`;
-  const desc = `“${r.quote}” Claim: ${r.claim}`.slice(0, 300);
-  const xText = `${r.speaker} on All-In (${fmtDate(r.date)}): rated ${r.verdict}.`;
-  const xHref = `https://x.com/intent/post?text=${encodeURIComponent(xText)}&url=${encodeURIComponent(url)}&via=wiitapur`;
+  const path = pathOf(r);
+  const asked = qy.slug ? `/${String(qy.v || "").toLowerCase()}/${qy.slug}` : "";
+  if (asked !== path) { res.setHeader("Cache-Control", "public, s-maxage=300"); res.setHeader("Location", path); return res.status(301).send(""); }
+  const url = SITE + path;
+  const title = `${String(r.verdict).toUpperCase()}: ${r.speaker} on All-In, ${fmtDate(r.date)}`;
+  const desc = `Claim: ${r.claim} Evidence and sources on The All-In Audit.`.slice(0, 280);
+  const xText = `${String(r.verdict).toUpperCase()}: ${r.speaker} on All-In (${fmtDate(r.date)})`;
+  const xHref = `https://x.com/intent/post?text=${encodeURIComponent(xText)}&url=${encodeURIComponent(url)}`;
+  const xPaste = `${xText}\n${url}`;
   const src = r.sources.map(u => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(hostOf(u))}</a>`).join("");
   const due = r.type === "Prediction" && r.target ? `<span>Due ${fmtDate(r.target)}</span>` : "";
   const more = rows.filter(x => x.speaker === r.speaker && x.id !== r.id).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 4);
@@ -105,7 +110,7 @@ module.exports = async function handler(req, res) {
       <p class="claim"><strong>Claim:</strong> ${esc(r.claim)}</p>
       <div class="ev"><p><strong>Evidence.</strong> ${esc(r.evidence)}</p>${r.notes ? `<p class="note">${esc(r.notes)}</p>` : ""}</div>
       <div class="srcs">${src}</div>
-      <div class="share"><a href="${esc(xHref)}" target="_blank" rel="noopener">${XICON} Post on X</a><button type="button" data-copy="${esc(url)}">Copy link</button><span>Episode: ${esc(r.title)}</span></div>
+      <div class="share"><a href="${esc(xHref)}" target="_blank" rel="noopener">${XICON} Post on X</a><button type="button" data-copy="${esc(xPaste)}">Copy for X</button><button type="button" data-copy="${esc(url)}">Copy link</button><span>Episode: ${esc(r.title)}</span></div>
     </article>
     <p class="note" style="margin-top:1rem">Verdicts follow the published <a href="/methodology">methodology</a>. Think this one is wrong? <a href="https://github.com/wiita/all-in-audit/issues/new?template=correction.yml&title=${encodeURIComponent("Correction: " + r.id)}">Request a correction</a>.</p>
     ${more.length ? `<h2>More from ${esc(r.speaker)}</h2><div class="more">${more.map(mini).join("")}</div>` : ""}`;
