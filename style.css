@@ -56,3 +56,19 @@ select,input[type=search]{font-family:var(--sans);font-size:.92rem;color:var(--i
 header.top nav a.xlink{display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;padding:0;margin-left:.35rem;border-radius:50%;background:var(--ink);color:var(--sheet)}
 header.top nav a.xlink:hover{background:#000;color:#fff}
 a.xfoot{display:inline-flex;align-items:center;gap:.25rem}
+
+/* claim cards (shared by the home page and claim pages) */
+.entry{background:var(--sheet);border:1px solid var(--soft);border-left:4px solid var(--rule);border-radius:2px;padding:1rem 1.15rem;display:flex;flex-direction:column;gap:.5rem;min-width:0}
+.entry.e-Accurate{border-left-color:var(--acc)} .entry.e-Misleading{border-left-color:var(--mis)} .entry.e-False{border-left-color:var(--fal)} .entry.e-Pending{border-left-color:var(--pen)}
+.entry .meta{display:flex;flex-wrap:wrap;gap:.3rem 1rem;align-items:center;font-family:var(--sans);font-size:.8rem;color:var(--pencil);font-variant-numeric:tabular-nums}
+.entry .meta .who{color:var(--ink);font-weight:600;font-size:.92rem}
+.entry blockquote{margin:0;font-style:normal;font-weight:400;color:#24354D;font-size:1.08rem;line-height:1.45;overflow-wrap:anywhere}
+.entry .claim{margin:0;font-size:.97rem;overflow-wrap:anywhere}
+.entry details summary{cursor:pointer;font-family:var(--sans);font-size:.85rem;font-weight:600;color:var(--ink)}
+.entry details[open] summary{margin-bottom:.4rem}
+.entry details p{margin:0 0 .45rem;font-size:.95rem;overflow-wrap:anywhere}
+.srcs{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-family:var(--sans);font-size:.82rem;overflow-wrap:anywhere}
+.leanpill{font-family:var(--sans);font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.share{display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:center;font-family:var(--sans);font-size:.82rem}
+.share a,.share button{font:inherit;color:var(--pencil);background:none;border:0;padding:0;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem}
+.share a:hover,.share button:hover{color:var(--ink);text-decoration:underline}

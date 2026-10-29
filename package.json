@@ -1,0 +1,9 @@
+{
+  "name": "all-in-audit",
+  "private": true,
+  "description": "The All-In Audit (allin.fan): static site plus small Vercel functions for Ask, claim pages and share images.",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@vercel/og": "0.6.8"
+  }
+}
