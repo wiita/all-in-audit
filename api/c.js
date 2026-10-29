@@ -95,7 +95,9 @@ module.exports = async function handler(req, res) {
   const url = SITE + path;
   const title = `${String(r.verdict).toUpperCase()}: ${r.speaker} on All-In, ${fmtDate(r.date)}`;
   const desc = `Claim: ${r.claim} Evidence and sources on The All-In Audit.`.slice(0, 280);
-  const xText = `${String(r.verdict).toUpperCase()}: ${r.speaker} on All-In (${fmtDate(r.date)})`;
+  const xText = (r=>{const c=String(r.claim||"").trim(), cl=c.length>190?c.slice(0,189).replace(/\s+\S*$/,"")+"…":c;
+    const due=r.verdict==="Pending"&&r.target?` · due ${fmtDate(r.target)}`:"";
+    return `${String(r.verdict).toUpperCase()}: ${cl}\n— ${r.speaker} on All-In, ${fmtDate(r.date)}${due}`;})(r);
   const xHref = `https://x.com/intent/post?text=${encodeURIComponent(xText)}&url=${encodeURIComponent(url)}`;
   const xPaste = `${xText}\n${url}`;
   const src = r.sources.map(u => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(hostOf(u))}</a>`).join("");
