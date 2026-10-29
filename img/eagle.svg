@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 200" role="img" aria-label="A sad bald eagle">
+  <g stroke="#1B2A41" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M14 180 H206" fill="none"/>
+    <!-- tail -->
+    <path d="M116 168 L124 192 L146 192 L146 168 Z" fill="#fff"/>
+    <!-- body -->
+    <path d="M72 82 C54 112 60 150 92 174 L144 174 C168 150 170 110 150 82 Z" fill="#6B4A2E"/>
+    <!-- folded wing -->
+    <path d="M118 90 C156 100 170 138 152 176 L130 176 C142 150 140 118 118 90 Z" fill="#4E3520"/>
+    <path d="M132 120 C138 132 140 146 138 160 M144 112 C150 126 152 142 150 156" fill="none" stroke="#3A2716" stroke-width="1.6"/>
+    <!-- feet -->
+    <path d="M96 174 V181 M90 181 H102 M120 174 V181 M114 181 H126" fill="none" stroke="#C98A12" stroke-width="3"/>
+    <!-- head, drooped -->
+    <path d="M60 88 C46 62 68 36 100 38 C130 40 148 60 150 88 C132 100 84 102 60 88 Z" fill="#fff"/>
+    <!-- beak, pointing down -->
+    <path d="M66 68 C50 70 38 82 40 102 C44 94 50 90 58 90 C63 87 69 82 72 77 Z" fill="#E8A417"/>
+    <!-- sad brow and closed eye -->
+    <path d="M74 54 Q86 51 98 60" fill="none" stroke-width="2.8"/>
+    <path d="M79 68 Q86 63 93 68" fill="none" stroke-width="2.6"/>
+    <!-- tear -->
+    <path d="M86 75 C83 81 83 86 86.5 87 C90 86 90 81 86 75 Z" fill="#6E9FE0" stroke="#2E5B9A" stroke-width="1.4"/>
+    <!-- limp flag -->
+    <path d="M186 180 V96" fill="none" stroke-width="2.6"/><circle cx="186" cy="94" r="2.6" fill="#E8A417"/>
+    <path d="M186 99 C200 108 198 136 206 160 L193 164 C187 146 190 120 186 99 Z" fill="#B3122B"/>
+    <path d="M186 99 C192 104 194 114 194 124 L188 126 C188 118 188 108 186 99 Z" fill="#2E5B9A" stroke-width="1.6"/>
+    <path d="M191 132 C193 142 195 152 198 161 M196 126 C198 136 200 146 203 156" fill="none" stroke="#fff" stroke-width="1.8"/>
+  </g>
+</svg>

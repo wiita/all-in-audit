@@ -16,13 +16,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <style>
-  .hero{padding:3.5rem 0 1rem;max-width:46rem}
+  .hero{padding:4rem 0 1rem}
+  .hero h1,.hero .lede{max-width:46rem}
   .hero .lede strong{font-weight:600}
-  .stats{display:grid;grid-template-columns:repeat(5,minmax(0,auto));justify-content:start;gap:.75rem 3rem;margin-top:2rem;font-family:var(--sans)}
-  @media (max-width:760px){.stats{grid-template-columns:repeat(3,minmax(0,auto));gap:1rem 2rem}}
+  .statrow{display:flex;align-items:center;justify-content:space-between;gap:2rem;margin-top:2.6rem;padding-top:1.6rem;border-top:1px solid var(--rule)}
+  .stats{display:grid;grid-template-columns:repeat(5,minmax(0,auto));justify-content:start;gap:.75rem 3rem;font-family:var(--sans)}
+  @media (max-width:860px){.stats{grid-template-columns:repeat(3,minmax(0,auto));gap:1.1rem 2rem}}
   .stats div{display:flex;flex-direction:column}
-  .stats b{font-size:2.1rem;font-weight:500;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
-  .stats span{font-size:.74rem;color:var(--pencil);text-transform:uppercase;letter-spacing:.08em;margin-top:.45rem;white-space:nowrap}
+  .stats b{font-size:2.3rem;font-weight:500;letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums}
+  .stats span{font-size:.7rem;color:var(--pencil);text-transform:uppercase;letter-spacing:.09em;margin-top:.5rem;white-space:nowrap}
+  .eagle{flex:0 0 auto;width:170px;height:auto;margin:-1.2rem 0 -.6rem}
+  @media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,auto));gap:1.1rem 1.8rem}.stats b{font-size:1.9rem}.stats span{white-space:normal}.eagle{width:110px;margin:0}.statrow{align-items:flex-start;gap:1rem}}
   td.fal{color:var(--fal);font-weight:600}
   td.mis{color:var(--mis)}
   td.acc{color:var(--acc)}
@@ -33,10 +37,14 @@
   .pred .who{font-weight:600}
   .pred .rule{font-size:.9rem;color:#33445C}
   .due{font-family:var(--sans);font-weight:600;color:var(--ink)}
-  .ask{display:flex;gap:.5rem;margin-bottom:.4rem}
-  .ask input{flex:1 1 auto;min-width:0;font-size:1rem;padding:.65rem .8rem}
-  .hero-ask{margin-top:1.8rem;max-width:40rem}
-  .hero-ask input{padding:.8rem .9rem;font-size:1.05rem}
+  .askcard{background:var(--sheet);border:1px solid var(--soft);border-radius:10px;padding:1.6rem 1.6rem 1.1rem;box-shadow:0 1px 2px rgba(27,42,65,.05),0 8px 24px -12px rgba(27,42,65,.18)}
+  .askcard .sechead{margin-bottom:1rem}
+  .ask{display:flex;align-items:center;gap:.4rem;margin-bottom:.6rem;background:#fff;border:1px solid var(--rule);border-radius:8px;padding:.3rem;transition:border-color .15s,box-shadow .15s}
+  .ask:focus-within{border-color:var(--ink);box-shadow:0 0 0 3px rgba(27,42,65,.08)}
+  .ask input{flex:1 1 auto;min-width:0;font-size:1.02rem;padding:.6rem .7rem;border:0;background:transparent;outline:none}
+  .ask input:focus-visible{outline:none}
+  .ask .btn{border-radius:6px;padding:.6rem 1.2rem}
+  .askcard .asknote{margin:0}
   .track{display:inline-block;width:80px;text-align:left;vertical-align:middle;margin-right:.6rem;line-height:0}
   .track .bar{margin-right:0}
   #ask-sum{margin-bottom:1.1rem}
@@ -78,13 +86,10 @@
     <section class="hero" aria-labelledby="h">
       <h1 id="h">Four besties. Every checkable claim, checked.</h1>
       <p class="lede">An independent record of what the All-In Podcast hosts say about markets, tech and policy, measured against the evidence, with predictions tracked until they come due. <strong>Statements are quoted word for word, with the timestamp and the sources behind every verdict.</strong></p>
-      <form class="ask hero-ask" id="ask" role="search" autocomplete="off">
-        <label for="ask-q" class="sr-only">Ask the record</label>
-        <input id="ask-q" type="search" maxlength="200" placeholder="Ask, e.g. “What did Sacks get wrong on immigration?”">
-        <button class="btn" type="submit" id="ask-go">Ask</button>
-      </form>
-      <p class="asknote" id="ask-msg" aria-live="polite">Your question is turned into filters. Results are always the audit's own entries, never generated text.</p>
-      <div class="stats" id="stats" aria-live="polite"><div><b>…</b><span>Loading the record</span></div></div>
+      <div class="statrow">
+        <div class="stats" id="stats" aria-live="polite"><div><b>…</b><span>Loading the record</span></div></div>
+        <img class="eagle" src="/img/eagle.svg" width="150" height="136" alt="A sad bald eagle holding a limp flag">
+      </div>
     </section>
 
     <section id="scorecard" aria-labelledby="sc-h">
@@ -100,6 +105,21 @@
         </table>
       </div>
       <p class="note">Which claims get checked affects these numbers. A host who mostly relays news (earnings, filings, deal terms) has more easy-to-verify claims than one who argues a thesis. See the <a href="/methodology">methodology</a>.</p>
+    </section>
+
+    <section id="ask-sec" aria-labelledby="ak-h">
+      <div class="askcard">
+        <div class="sechead">
+          <p class="kicker">Ask the record</p>
+          <h2 id="ak-h">Ask in plain words</h2>
+        </div>
+        <form class="ask" id="ask" role="search" autocomplete="off">
+          <label for="ask-q" class="sr-only">Ask the record</label>
+          <input id="ask-q" type="search" maxlength="200" placeholder="Ask, e.g. “What did Sacks get wrong on immigration?”">
+          <button class="btn" type="submit" id="ask-go">Ask</button>
+        </form>
+        <p class="asknote" id="ask-msg" aria-live="polite">Your question is turned into filters. Results are always the audit's own entries, never generated text.</p>
+      </div>
     </section>
 
     <section id="lean" aria-labelledby="ln-h">
