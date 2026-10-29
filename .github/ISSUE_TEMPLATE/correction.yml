@@ -1,0 +1,27 @@
+name: Correction request
+description: Report a verdict, quote or source on allin.fan that you think is wrong.
+title: "Correction: [claim ID, e.g. AIA-20260703-06]"
+labels: ["correction"]
+body:
+  - type: input
+    id: claim
+    attributes:
+      label: Claim ID
+      description: The ID shown on the claim card (starts with AIA-).
+      placeholder: AIA-20260703-06
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's wrong
+      description: The quote, the verdict, the evidence or a source. Be specific.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Your evidence
+      description: Links to primary sources (filings, official statistics, court records, transcripts) carry the most weight.
+    validations:
+      required: true

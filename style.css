@@ -1,0 +1,51 @@
+/* The All-In Audit — shared styles. Ledger paper, navy ink, rubber-stamp verdicts. Light by design. */
+:root{
+  --paper:#E8ECF0; --sheet:#F6F8FA; --ink:#1B2A41; --pencil:#5E6B7A; --rule:#A9BDD1; --soft:#D5DEE7;
+  --acc:#1E6B5C; --mis:#A35F00; --fal:#B3122B; --unv:#5E6B7A; --pen:#2E5B9A;
+  --pro:#8A3B12; --crit:#2E5B9A;
+  --serif:"Spectral",Georgia,serif;
+  --sans:"Archivo","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:1.0625rem;line-height:1.55}
+a{color:inherit;text-underline-offset:3px}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--fal);outline-offset:2px}
+.wrap{max-width:64rem;margin:0 auto;padding-block:0;padding-left:max(1.25rem,env(safe-area-inset-left,0px));padding-right:max(1.25rem,env(safe-area-inset-right,0px))}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+header.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.5rem 1.5rem;padding:1.4rem 0 0;font-family:var(--sans);font-size:.92rem;color:var(--pencil)}
+header.top strong a{color:var(--ink);font-weight:700;font-stretch:112%;letter-spacing:.01em;text-decoration:none}
+header.top nav{display:flex;flex-wrap:wrap;gap:.25rem 1.25rem}
+header.top nav a{text-decoration:none}
+header.top nav a:hover,header.top nav a[aria-current]{color:var(--ink);text-decoration:underline}
+
+h1{font-weight:700;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1.05;letter-spacing:-.015em;margin:0 0 1.1rem;text-wrap:balance}
+h2{font-weight:700;font-size:clamp(1.45rem,3vw,1.9rem);line-height:1.15;margin:0 0 .4rem;text-wrap:balance}
+h3{font-size:1.1rem;margin:0}
+.kicker{font-family:var(--sans);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--pencil);margin:0 0 .5rem}
+.lede{font-size:1.22rem;line-height:1.5;margin:0;max-width:40rem}
+.note{font-family:var(--sans);font-size:.88rem;color:var(--pencil);max-width:46rem}
+section{padding:2.75rem 0 0}
+.sechead{display:flex;flex-direction:column;gap:.25rem;margin-bottom:1.1rem;max-width:46rem}
+.sechead p{margin:0;color:#33445C}
+
+.chip{display:inline-block;font-family:var(--sans);font-weight:700;font-stretch:115%;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;border:2px solid currentColor;border-radius:4px;padding:.12em .5em .08em;white-space:nowrap}
+.v-Accurate{color:var(--acc)} .v-Misleading{color:var(--mis)} .v-False{color:var(--fal)} .v-Unverified{color:var(--unv)} .v-Pending{color:var(--pen)}
+.l-Pro-admin{color:var(--pro)} .l-Critical{color:var(--crit)}
+
+table.ledger{width:100%;border-collapse:collapse;background:var(--sheet);font-family:var(--sans);font-variant-numeric:tabular-nums;box-shadow:0 1px 0 var(--rule),0 18px 40px -28px rgba(27,42,65,.45)}
+.ledger th,.ledger td{padding:.8rem .9rem;text-align:right;border-bottom:1px solid var(--soft);font-size:.98rem;white-space:nowrap}
+.ledger thead th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;color:var(--pencil);border-bottom:2px solid var(--ink);vertical-align:bottom;white-space:normal}
+.ledger th[scope=row]{text-align:left;font-family:var(--serif);font-size:1.08rem;font-weight:600;color:var(--ink)}
+.ledger thead th:first-child{text-align:left}
+.ledger tbody tr:last-child th,.ledger tbody tr:last-child td{border-bottom:0}
+.tablebox{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.bar{display:inline-block;height:.55rem;border-radius:1px;vertical-align:middle;margin-left:.45rem;background:currentColor;min-width:2px}
+
+footer{border-top:1px solid var(--rule);margin-top:3.5rem;padding:1.4rem 0 3rem;font-family:var(--sans);font-size:.88rem;color:var(--pencil);display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-between}
+.btn{display:inline-block;cursor:pointer;font-family:var(--sans);font-weight:700;font-stretch:110%;font-size:.95rem;border:2px solid var(--ink);background:var(--ink);color:var(--sheet);border-radius:4px;padding:.6rem 1.1rem;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink)}
+select,input[type=search]{font-family:var(--sans);font-size:.92rem;color:var(--ink);background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:.45rem .55rem}
+.loading{font-family:var(--sans);color:var(--pencil)}
