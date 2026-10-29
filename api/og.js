@@ -1,7 +1,7 @@
 // Share image for one claim (1200x630 PNG), used as the preview when a claim link is posted.
 const fs = require("fs");
 const path = require("path");
-const { loadRows, originOf, fmtDate, ID_RE } = require("./_data");
+const { loadRows, originOf, fmtDate, ID_RE, idFromSlug } = require("./_data");
 
 const font = f => fs.readFileSync(path.join(__dirname, "_fonts", f));
 let FONTS;
@@ -32,19 +32,21 @@ module.exports = async function handler(req, res) {
     ]);
   } else {
     const col = C[r.verdict] || C.ink;
-    const q = clip(r.quote, 190);
-    const qSize = q.length > 140 ? 40 : q.length > 90 ? 46 : 54;
-    tree = h("div", { width: "100%", height: "100%", background: C.paper, padding: "44px", fontFamily: "Geist", color: C.ink }, [
-      h("div", { flex: 1, background: C.sheet, border: `1px solid ${C.soft}`, borderLeft: `14px solid ${col}`, borderRadius: 6, padding: "44px 56px", flexDirection: "column", justifyContent: "space-between" }, [
+    const q = clip(r.quote, 120);
+    const qSize = q.length > 95 ? 56 : q.length > 60 ? 62 : 70;
+    tree = h("div", { width: "100%", height: "100%", background: C.sheet, fontFamily: "Geist", color: C.ink }, [
+      h("div", { width: 28, height: "100%", background: col }, []),
+      h("div", { flex: 1, flexDirection: "column", padding: "56px 72px 60px 64px" }, [
         h("div", { alignItems: "center", justifyContent: "space-between" }, [
-          h("div", { fontSize: 38, fontWeight: 600, letterSpacing: -1 }, r.speaker),
-          h("div", { fontSize: 30, fontWeight: 600, letterSpacing: 4, color: col, border: `3px solid ${col}`, borderRadius: 8, padding: "6px 18px 4px" }, (r.verdict || "").toUpperCase())
+          h("div", { background: col, color: "#fff", fontSize: 64, fontWeight: 600, letterSpacing: 6, padding: "10px 30px 6px", borderRadius: 10 }, (r.verdict || "").toUpperCase()),
+          h("div", { fontFamily: "Geist Mono", fontSize: 24, letterSpacing: 3, color: C.pencil }, "THE ALL-IN AUDIT")
         ]),
-        h("div", { fontSize: qSize, lineHeight: 1.25, color: "#24354D", letterSpacing: -0.5 }, `“${q}”`),
-        h("div", { justifyContent: "space-between", alignItems: "center", fontSize: 24, color: C.pencil }, [
-          h("div", { fontFamily: "Geist Mono", letterSpacing: 2, color: C.False }, "THE ALL-IN AUDIT · ALLIN.FAN"),
-          h("div", {}, `${fmtDate(r.date)} · ${r.id}`)
-        ])
+        h("div", { marginTop: 40, fontSize: 40, alignItems: "baseline" }, [
+          h("div", { fontWeight: 600, letterSpacing: -1 }, r.speaker),
+          h("div", { color: C.pencil, marginLeft: 18, fontSize: 32 }, `on All-In · ${fmtDate(r.date)}${r.verdict === "Pending" && r.target ? ` · due ${fmtDate(r.target)}` : ""}`)
+        ]),
+        h("div", { marginTop: 26, fontSize: qSize, lineHeight: 1.18, color: "#24354D", letterSpacing: -1, flex: 1 }, `“${q}”`),
+        h("div", { justifyContent: "flex-end", fontFamily: "Geist Mono", fontSize: 26, color: C.pencil, letterSpacing: 1 }, "allin.fan")
       ])
     ]);
   }
