@@ -106,3 +106,23 @@ a.xfoot{display:inline-flex;align-items:center;gap:.25rem}
 /* Tip pill in the header: visible, not loud */
 header.top nav a.navtip{display:inline-flex;align-items:center;gap:.3rem;margin-left:.35rem;padding:.3rem .8rem;border:1px solid var(--brand);border-radius:99px;color:var(--brand);font-weight:600}
 header.top nav a.navtip:hover{background:var(--brand);color:var(--brand-ink)}
+
+/* Besties vs. the markets (homepage) */
+.vsgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(17.5rem,1fr));gap:1rem}
+.vs{display:flex;flex-direction:column;gap:.7rem;padding:1.1rem 1.2rem 1rem;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;font-family:var(--sans)}
+.vs-top{display:flex;justify-content:space-between;gap:.5rem;font-size:.78rem;color:var(--pencil)}
+.vs-top .who{font-weight:650;color:var(--ink)}
+.vs-claim{margin:0;font-size:.95rem;line-height:1.4;flex:1}
+.vs-claim a{color:var(--ink);text-decoration:none}
+.vs-claim a:hover{text-decoration:underline}
+.vs-odds{display:flex;align-items:center;gap:.75rem}
+.vs-odds b{font-size:2rem;font-weight:550;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.vs-odds>span{font-size:.78rem;color:var(--pencil);line-height:1.35}
+.vs-tag{display:block;font-size:.72rem;font-weight:650;text-transform:uppercase;letter-spacing:.07em}
+.vs-agree .vs-odds b,.vs-agree .vs-tag{color:var(--acc)}
+.vs-doubt .vs-odds b,.vs-doubt .vs-tag{color:var(--fal)}
+.vs-flip .vs-odds b,.vs-flip .vs-tag{color:var(--mis)}
+.vs-venues{display:flex;flex-wrap:wrap;gap:.35rem;margin:0;font-size:.75rem}
+.vs-venues a,.vs-venues span{padding:.15rem .5rem;border-radius:99px;background:var(--soft);color:var(--ink2);text-decoration:none}
+.vs-venues a:hover{background:var(--brand);color:var(--brand-ink)}
+.vs-venues span{background:none;border:1px dashed var(--rule);color:var(--pencil)}

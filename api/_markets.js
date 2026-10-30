@@ -51,28 +51,34 @@ async function price(line) {
 
 const pctText = p => { const n = Math.round(p * 100); return n < 1 ? "<1%" : n > 99 ? ">99%" : n + "%"; };
 
-// HTML for the claim page, or "" when there is no matching market or no venue answered.
-async function marketsBox(r) {
-  if (!r || r.type !== "Prediction" || r.verdict !== "Pending") return "";
+// Live odds for one claim: { label, fit, gap, side, venues:[{venue,name,p,url}] } (p = chance the host's call comes true), or null.
+async function odds(r) {
+  if (!r || r.type !== "Prediction" || r.verdict !== "Pending") return null;
   const c = MAP.claims[r.id];
   const set = c && MAP.sets[c.set];
-  if (!set) return "";
-  const got = await Promise.all(set.lines.map(l => price(l).then(v => v && { ...v, venue: l.venue })));
-  const rows = got.filter(Boolean);
-  if (!rows.length) return "";
+  if (!set) return null;
+  const got = await Promise.all(set.lines.map(l => price(l).then(v => v && { venue: l.venue, name: NAMES[l.venue], url: v.url, p: c.side === "no" ? 1 - v.p : v.p })));
+  const venues = got.filter(Boolean);
+  if (!venues.length) return null;
+  return { label: set.label, fit: c.fit, gap: c.gap || "", side: c.side, venues };
+}
+
+// HTML for the claim page, or "" when there is no matching market or no venue answered.
+async function marketsBox(r) {
+  const o = await odds(r);
+  if (!o) return "";
   const host = String(r.speaker || "").split(/\s+/).pop();
-  const li = rows.map(x => {
-    const p = c.side === "no" ? 1 - x.p : x.p;
-    const w = Math.max(2, Math.round(p * 100));
-    return `<li><a href="${esc(x.url)}" target="_blank" rel="noopener nofollow">${NAMES[x.venue]}</a><span class="mk-bar" aria-hidden="true"><span style="width:${w}%"></span></span><b>${pctText(p)}</b></li>`;
+  const li = o.venues.map(x => {
+    const w = Math.max(2, Math.round(x.p * 100));
+    return `<li><a href="${esc(x.url)}" target="_blank" rel="noopener nofollow">${x.name}</a><span class="mk-bar" aria-hidden="true"><span style="width:${w}%"></span></span><b>${pctText(x.p)}</b></li>`;
   }).join("");
   return `
     <section class="markets" aria-labelledby="mk-h">
       <div class="mk-head"><h2 id="mk-h">What the markets say</h2><span>Chance ${esc(host)}'s call comes true</span></div>
       <ul>${li}</ul>
-      <p class="mk-q">Market: ${esc(set.label)}${c.side === "no" ? " (his call needs No)" : ""}. ${c.fit === "same" ? "Same question as our scoring rule." : esc(c.gap || "Nearest market, not an exact match.")}</p>
+      <p class="mk-q">Market: ${esc(o.label)}${o.side === "no" ? " (his call needs No)" : ""}. ${o.fit === "same" ? "Same question as our scoring rule." : esc(o.gap || "Nearest market, not an exact match.")}</p>
       <p class="mk-fine">Live prices, refreshed every few minutes. Market odds are not part of our verdict. Plain links: we have no referral deal with any of these venues and earn nothing from them. Some venues are not available in every country.</p>
     </section>`;
 }
 
-module.exports = { marketsBox };
+module.exports = { marketsBox, odds, mapped: id => !!MAP.claims[id] };

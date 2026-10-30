@@ -83,7 +83,7 @@
 <div class="wrap">
   <header class="top">
     <strong><a href="/">The All-In Audit</a></strong>
-    <nav aria-label="Site"><a href="#scorecard">Scorecard</a><a href="#predictions">Predictions</a><a href="#claims">All claims</a><a href="/game">Game</a><a href="/methodology">Methodology</a><a class="navtip" href="/support" target="_blank" rel="noopener" title="Tip the audit on Ko-fi">☕ Tip</a><a class="xlink" href="https://x.com/wiitapur" target="_blank" rel="noopener" aria-label="Follow @wiitapur on X"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a></nav>
+    <nav aria-label="Site"><a href="#markets">Markets</a><a href="#scorecard">Scorecard</a><a href="#predictions">Predictions</a><a href="#claims">All claims</a><a href="/game">Game</a><a href="/methodology">Methodology</a><a class="navtip" href="/support" target="_blank" rel="noopener" title="Tip the audit on Ko-fi">☕ Tip</a><a class="xlink" href="https://x.com/wiitapur" target="_blank" rel="noopener" aria-label="Follow @wiitapur on X"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a></nav>
   </header>
 
   <main>
@@ -98,6 +98,16 @@
       <div class="statrow">
         <div class="stats" id="stats" aria-live="polite"><div><b>…</b><span>Loading the record</span></div></div>
       </div>
+    </section>
+
+    <section id="markets" aria-labelledby="mv-h" hidden>
+      <div class="sechead">
+        <p class="kicker">Besties vs. the markets</p>
+        <h2 id="mv-h">Where the money stands on their open calls</h2>
+        <p>Live odds from Kalshi, Polymarket and PredictIt that each call comes true. Context only: odds never change a verdict, and the links carry no referral codes.</p>
+      </div>
+      <div class="vsgrid" id="vsgrid"></div>
+      <div class="more"><button class="btn ghost" id="vsmore" type="button" hidden>Show all</button></div>
     </section>
 
     <section id="scorecard" aria-labelledby="sc-h">
@@ -317,6 +327,23 @@
   });
   $("more").addEventListener("click",()=>{shown+=25;render(false);});
   render(true);
+})();
+</script>
+<script>
+(async()=>{
+  const sec=document.getElementById("markets"), grid=document.getElementById("vsgrid"), more=document.getElementById("vsmore");
+  let d; try{ d=await (await fetch("/api/markets")).json(); }catch(e){ return; }
+  const items=(d&&d.items)||[]; if(!items.length) return;
+  const {esc,fmtDate}=window.Audit; const pc=p=>{const n=Math.round(p*100);return n<1?"<1%":n>99?">99%":n+"%";};
+  const tag=p=>p>=.6?["agree","Markets agree"]:p<=.4?["doubt","Markets doubt it"]:["flip","Toss-up"];
+  const card=x=>{const [k,t]=tag(x.avg);const last=({"Chamath Palihapitiya":"Chamath","David Sacks":"Sacks","David Friedberg":"Friedberg","Jason Calacanis":"Jason"})[x.speaker]||x.speaker.split(" ").pop();
+    return `<article class="vs vs-${k}"><div class="vs-top"><span class="who">${esc(x.speaker)}</span>${x.target?`<span>Due ${fmtDate(x.target)}</span>`:""}</div>
+      <p class="vs-claim"><a href="${esc(x.path)}">${esc(x.claim)}</a></p>
+      <div class="vs-odds"><b>${pc(x.avg)}</b><span><span class="vs-tag">${t}</span>chance ${esc(last)} is right${x.venues.length>1?", market average":""}</span></div>
+      <p class="vs-venues">${x.venues.map(v=>`<a href="${esc(v.url)}" target="_blank" rel="noopener nofollow">${esc(v.name)} ${pc(v.p)}</a>`).join("")}${x.fit!=="same"?`<span title="${esc(x.market)}">nearest market</span>`:""}</p></article>`;};
+  const N=6; grid.innerHTML=items.slice(0,N).map(card).join("");
+  if(items.length>N){more.hidden=false;more.textContent=`Show all ${items.length}`;more.onclick=()=>{grid.innerHTML=items.map(card).join("");more.hidden=true;};}
+  sec.hidden=false;
 })();
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
