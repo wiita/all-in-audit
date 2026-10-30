@@ -47,7 +47,7 @@ ${status === 404 ? '<meta name="robots" content="noindex">' : ""}
 <div class="wrap">
   <header class="top">
     <strong><a href="/">The All-In Audit</a></strong>
-    <nav aria-label="Site"><a href="/#markets">Markets</a><a href="/#scorecard">Scorecard</a><a href="/#predictions">Predictions</a><a href="/#claims">All claims</a><a href="/game">Game</a><a href="/methodology">Methodology</a><a class="navtip" href="/support" target="_blank" rel="noopener" title="Tip the audit on Ko-fi">☕ Tip</a><a class="xlink" href="https://x.com/wiitapur" target="_blank" rel="noopener" aria-label="Follow @wiitapur on X">${XICON.replace(/13/g, "15")}</a></nav>
+    <nav aria-label="Site"><a href="/#scorecard">Scorecard</a><a href="/#markets">Markets</a><a href="/#predictions">Predictions</a><a href="/#claims">All claims</a><a href="/game">Game</a><a href="/methodology">Methodology</a><a class="navtip" href="/support" target="_blank" rel="noopener" title="Tip the audit on Ko-fi">☕ Tip</a><a class="xlink" href="https://x.com/wiitapur" target="_blank" rel="noopener" aria-label="Follow @wiitapur on X">${XICON.replace(/13/g, "15")}</a></nav>
   </header>
   <main class="cpage">
 ${body}
