@@ -1,0 +1,96 @@
+{
+  "note": "Open predictions matched to similar prediction markets. 'side' is which market outcome the host's call needs: yes or no. 'fit' is 'same' when the market asks the same question as the scoring rule, 'close' when it is only the nearest market; 'gap' says how it differs. Plain links only: no referral codes, no money from any venue.",
+  "sets": {
+    "senate-r": {
+      "label": "Republicans control the Senate after the 2026 midterms",
+      "lines": [
+        { "venue": "kalshi", "ticker": "CONTROLS-2026-R" },
+        { "venue": "polymarket", "slug": "will-the-republican-party-control-the-senate-after-the-2026-midterm-elections" },
+        { "venue": "predictit", "market": 8155, "contract": 31948 }
+      ]
+    },
+    "r-senate-d-house": {
+      "label": "Republicans hold the Senate and Democrats win the House",
+      "lines": [
+        { "venue": "kalshi", "ticker": "KXBALANCEPOWERCOMBO-27FEB-DR" },
+        { "venue": "polymarket", "slug": "2026-balance-of-power-r-senate-d-house-444" }
+      ]
+    },
+    "d-sweep": {
+      "label": "Democrats control both the House and the Senate",
+      "lines": [
+        { "venue": "kalshi", "ticker": "KXBALANCEPOWERCOMBO-27FEB-DD" },
+        { "venue": "polymarket", "slug": "2026-balance-of-power-d-senate-d-house-949" }
+      ]
+    },
+    "r-sweep": {
+      "label": "Republicans keep both the House and the Senate",
+      "lines": [
+        { "venue": "kalshi", "ticker": "KXBALANCEPOWERCOMBO-27FEB-RR" },
+        { "venue": "polymarket", "slug": "2026-balance-of-power-r-senate-r-house-537" }
+      ]
+    },
+    "ca-billionaire-tax": {
+      "label": "California's one-time billionaire tax passes in November 2026",
+      "lines": [
+        { "venue": "polymarket", "slug": "billionaire-one-time-wealth-tax-passes-in-california-election-2026" }
+      ]
+    },
+    "anthropic-under-1-25t": {
+      "label": "Anthropic's market cap is under $1.25tn at the close of its IPO day",
+      "lines": [
+        { "venue": "polymarket", "slug": "will-anthropics-market-cap-be-less-than-1pt25t-at-market-close-on-ipo-day" }
+      ]
+    },
+    "anthropic-1-75-2t": {
+      "label": "Anthropic's market cap is $1.75-2.0tn at the close of its IPO day",
+      "lines": [
+        { "venue": "polymarket", "slug": "will-anthropics-market-cap-be-between-1pt75t-and-2pt0t-at-market-close-on-ipo-day" }
+      ]
+    },
+    "tsla-spacex-mid-2027": {
+      "label": "Tesla and SpaceX announce a merger by mid-2027",
+      "lines": [
+        { "venue": "kalshi", "ticker": "KXCOMPANYACTIONMERGER-27-27MAY01", "q": "Definitive merger agreement before 1 May 2027" },
+        { "venue": "polymarket", "slug": "tesla-and-spacex-merger-officially-announced-by-june-30-2027", "q": "Merger officially announced by 30 Jun 2027" }
+      ]
+    },
+    "tsla-spacex-2027": {
+      "label": "Tesla and SpaceX announce a merger by the end of 2027",
+      "lines": [
+        { "venue": "kalshi", "ticker": "KXCOMPANYACTIONMERGER-27-28JAN01", "q": "Definitive merger agreement before 2028" },
+        { "venue": "polymarket", "slug": "tesla-and-spacex-merger-officially-announced-by-december-31-2027", "q": "Merger officially announced by 31 Dec 2027" }
+      ]
+    },
+    "newsom-nominee": {
+      "label": "Gavin Newsom wins the 2028 Democratic nomination",
+      "lines": [
+        { "venue": "kalshi", "ticker": "KXPRESNOMD-28-GN" },
+        { "venue": "polymarket", "slug": "will-gavin-newsom-win-the-2028-democratic-presidential-nomination-568" },
+        { "venue": "predictit", "market": 8153, "contract": 31937 }
+      ]
+    },
+    "aoc-president": {
+      "label": "Alexandria Ocasio-Cortez wins the 2028 presidential election",
+      "lines": [
+        { "venue": "kalshi", "ticker": "KXPRESPERSON-28-AOCA" },
+        { "venue": "polymarket", "slug": "will-alexandria-ocasio-cortez-win-the-2028-us-presidential-election" },
+        { "venue": "predictit", "market": 8171, "contract": 32019 }
+      ]
+    }
+  },
+  "claims": {
+    "AIA-20261002-14": { "set": "senate-r", "side": "yes", "fit": "same" },
+    "AIA-20261002-16": { "set": "r-senate-d-house", "side": "yes", "fit": "close", "gap": "The markets price who controls each chamber, not whether the House majority is slim (230 seats or fewer)." },
+    "AIA-20261002-17": { "set": "d-sweep", "side": "yes", "fit": "same" },
+    "AIA-20260213-11": { "set": "r-sweep", "side": "no", "fit": "same", "gap": "His call is that Republicans lose at least one chamber, so it needs this market to resolve No." },
+    "AIA-20260117-07": { "set": "ca-billionaire-tax", "side": "yes", "fit": "same" },
+    "AIA-20260926-14": { "set": "anthropic-under-1-25t", "side": "yes", "fit": "close", "gap": "His call is about the IPO price (around $1tn or less); the market measures market cap at the first day's close, and its lowest band is under $1.25tn." },
+    "AIA-20261017-12": { "set": "anthropic-1-75-2t", "side": "yes", "fit": "close", "gap": "His call is a $1.7-1.9tn IPO valuation; the nearest market band is $1.75-2.0tn at the first day's close." },
+    "AIA-20260508-10": { "set": "tsla-spacex-mid-2027", "side": "yes", "fit": "close", "gap": "The markets resolve on an announcement or signed agreement; the scoring rule needs the merger itself." },
+    "AIA-20260403-02": { "set": "tsla-spacex-2027", "side": "yes", "fit": "close", "gap": "The markets end in December 2027 and resolve on an announcement; his call runs to April 2028." },
+    "AIA-20250822-06": { "set": "newsom-nominee", "side": "yes", "fit": "same" },
+    "AIA-20250822-07": { "set": "aoc-president", "side": "no", "fit": "close", "gap": "No market prices 'a socialist'; AOC, the best-known democratic socialist in the field, is the nearest. His call needs her to lose." },
+    "AIA-20260821-13": { "set": "aoc-president", "side": "yes", "fit": "close", "gap": "His call is a democratic-socialist candidate 'like AOC'; the market prices AOC herself." }
+  }
+}

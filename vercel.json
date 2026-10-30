@@ -22,5 +22,12 @@
       "source": "/corrections",
       "destination": "/api/corrections"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/support",
+      "destination": "/methodology#funding",
+      "permanent": false
+    }
   ]
 }
