@@ -102,3 +102,7 @@ a.xfoot{display:inline-flex;align-items:center;gap:.25rem}
 .markets .mk-q{font-size:.86rem;color:var(--ink2);margin:.8rem 0 .35rem}
 .markets .mk-fine{font-size:.76rem;color:var(--pencil);margin:0}
 @media (max-width:480px){.markets li{grid-template-columns:5.6rem 1fr 2.8rem;gap:.6rem}}
+
+/* Tip pill in the header: visible, not loud */
+header.top nav a.navtip{display:inline-flex;align-items:center;gap:.3rem;margin-left:.35rem;padding:.3rem .8rem;border:1px solid var(--brand);border-radius:99px;color:var(--brand);font-weight:600}
+header.top nav a.navtip:hover{background:var(--brand);color:var(--brand-ink)}
