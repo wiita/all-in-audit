@@ -1,0 +1,64 @@
+{
+ "note": "Hosts absent from each episode (everyone else was on). Based on the host's own introduction of the episode and on who speaks in the transcript. Episodes not listed had all four hosts.",
+ "absent": {
+  "1000721304192": [
+   "Chamath Palihapitiya",
+   "David Sacks"
+  ],
+  "1000731223681": [
+   "David Friedberg"
+  ],
+  "1000736798763": [
+   "David Sacks"
+  ],
+  "1000737865862": [
+   "David Sacks"
+  ],
+  "1000748626764": [
+   "Chamath Palihapitiya"
+  ],
+  "1000753534584": [
+   "David Sacks"
+  ],
+  "1000755144717": [
+   "David Friedberg"
+  ],
+  "1000759123492": [
+   "David Sacks"
+  ],
+  "1000760748945": [
+   "David Friedberg"
+  ],
+  "1000766858188": [
+   "David Friedberg"
+  ],
+  "1000768018071": [
+   "David Sacks"
+  ],
+  "1000769153288": [
+   "David Sacks"
+  ],
+  "1000770251749": [
+   "David Friedberg"
+  ],
+  "1000774412562": [
+   "David Friedberg"
+  ],
+  "1000776336539": [
+   "David Friedberg"
+  ],
+  "1000780992629": [
+   "Chamath Palihapitiya"
+  ],
+  "1000783368405": [
+   "Chamath Palihapitiya",
+   "David Friedberg"
+  ],
+  "1000796753063": [
+   "David Friedberg"
+  ],
+  "1000797862912": [
+   "David Sacks"
+  ]
+ }
+}

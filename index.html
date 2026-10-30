@@ -109,11 +109,11 @@
       </div>
       <div class="tablebox">
         <table class="ledger" id="score">
-          <thead><tr><th scope="col">Host</th><th scope="col">Rated</th><th scope="col">Accurate</th><th scope="col">Misleading</th><th scope="col">False</th><th scope="col">False rate</th><th scope="col" class="opt">Unverified</th><th scope="col" class="opt">Open predictions</th></tr></thead>
-          <tbody><tr><td colspan="8" class="loading" style="text-align:left">Loading…</td></tr></tbody>
+          <thead><tr><th scope="col">Host</th><th scope="col">Episodes</th><th scope="col" class="opt">Statements per episode</th><th scope="col">Rated</th><th scope="col">Accurate</th><th scope="col">Misleading</th><th scope="col">False</th><th scope="col">False rate</th><th scope="col" class="opt">Unverified</th><th scope="col" class="opt">Open predictions</th></tr></thead>
+          <tbody><tr><td colspan="10" class="loading" style="text-align:left">Loading…</td></tr></tbody>
         </table>
       </div>
-      <p class="note">Which claims get checked affects these numbers. A host who mostly relays news (earnings, filings, deal terms) has more easy-to-verify claims than one who argues a thesis. See the <a href="/methodology">methodology</a>.</p>
+      <p class="note">Episodes counts the episodes in the record each host appeared on. Which claims get checked affects these numbers. A host who mostly relays news (earnings, filings, deal terms) has more easy-to-verify claims than one who argues a thesis. See the <a href="/methodology">methodology</a>.</p>
     </section>
 
     <section id="ask-sec" aria-labelledby="ak-h">
@@ -215,13 +215,17 @@
 
   // scorecard
   const pct=(a,b)=>b?Math.round(100*a/b):0;
+  let absent={};
+  try{ const ar=await fetch("/data/appearances.json"); if(ar.ok) absent=(await ar.json()).absent||{}; }catch(e){}
+  const epIds=[...new Set(rows.map(r=>r.episode))];
   const sc=HOSTS.map(h=>{
     const mine=rows.filter(r=>r.speaker===h), rt=mine.filter(r=>RATED.includes(r.verdict));
     const c=v=>rt.filter(r=>r.verdict===v).length;
-    return {h,n:rt.length,a:c("Accurate"),m:c("Misleading"),f:c("False"),u:mine.filter(r=>r.verdict==="Unverified").length,p:mine.filter(r=>r.verdict==="Pending").length};
+    const on=epIds.filter(e=>!(absent[e]||[]).includes(h)).length;
+    return {h,on,per:on?(mine.length/on).toFixed(1):"—",n:rt.length,a:c("Accurate"),m:c("Misleading"),f:c("False"),u:mine.filter(r=>r.verdict==="Unverified").length,p:mine.filter(r=>r.verdict==="Pending").length};
   }).sort((x,y)=>pct(y.f,y.n)-pct(x.f,x.n)||pct(y.m,y.n)-pct(x.m,x.n));
   const maxF=Math.max(...sc.map(s=>pct(s.f,s.n)),1);
-  $("score").tBodies[0].innerHTML=sc.map(s=>`<tr><th scope="row">${esc(s.h)}</th><td>${s.n}</td><td class="acc">${s.a}</td><td class="mis">${s.m}</td><td class="fal">${s.f}</td><td class="fal"><span class="track" aria-hidden="true"><span class="bar" style="width:${Math.max(2,Math.round(80*pct(s.f,s.n)/maxF))}px"></span></span><span class="pctv">${pct(s.f,s.n)}%</span></td><td class="opt">${s.u}</td><td class="opt">${s.p}</td></tr>`).join("");
+  $("score").tBodies[0].innerHTML=sc.map(s=>`<tr><th scope="row">${esc(s.h)}</th><td>${s.on}</td><td class="opt">${s.per}</td><td>${s.n}</td><td class="acc">${s.a}</td><td class="mis">${s.m}</td><td class="fal">${s.f}</td><td class="fal"><span class="track" aria-hidden="true"><span class="bar" style="width:${Math.max(2,Math.round(80*pct(s.f,s.n)/maxF))}px"></span></span><span class="pctv">${pct(s.f,s.n)}%</span></td><td class="opt">${s.u}</td><td class="opt">${s.p}</td></tr>`).join("");
 
   // lean
   const bad=r=>r.verdict==="False"||r.verdict==="Misleading";
