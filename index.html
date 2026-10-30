@@ -16,24 +16,23 @@
 <meta name="twitter:site" content="@wiitapur">
 <meta name="twitter:image" content="https://allin.fan/og/home.png">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="/style.css">
 <style>
   .hero{padding:4rem 0 1rem}
   .hero h1,.hero .lede{max-width:46rem}
+  .hero h1 mark{color:inherit;background:linear-gradient(transparent 60%,var(--hl) 60%,var(--hl) 91%,transparent 91%);padding:0 .04em}
   .hero .lede strong{font-weight:600}
   .statrow{display:flex;align-items:center;justify-content:space-between;gap:2rem;margin-top:2.6rem;padding-top:1.6rem;border-top:1px solid var(--rule)}
   .stats{display:grid;grid-template-columns:repeat(5,minmax(0,auto));justify-content:start;gap:.75rem 3rem;font-family:var(--sans)}
   @media (max-width:860px){.stats{grid-template-columns:repeat(3,minmax(0,auto));gap:1.1rem 2rem}}
   .stats div{display:flex;flex-direction:column}
-  .stats b{font-size:2.3rem;font-weight:500;letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums}
+  .stats b{font-size:2.5rem;font-weight:500;color:var(--brand);letter-spacing:-.06em;line-height:1;font-variant-numeric:tabular-nums}
   .stats span{font-size:.7rem;color:var(--pencil);text-transform:uppercase;letter-spacing:.09em;margin-top:.5rem;white-space:nowrap}
   @media (max-width:600px){.stats{grid-template-columns:repeat(2,minmax(0,auto));gap:1.1rem 1.8rem}.stats b{font-size:1.9rem}.stats span{white-space:normal}.statrow{align-items:flex-start;gap:1rem}}
   .herotop{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2rem 3rem;align-items:start}
   .motto{margin:.9rem 0 0;text-align:right}
-  .motto blockquote{margin:0;font-family:"Cinzel",Georgia,"Times New Roman",serif;font-weight:600;font-size:1.7rem;line-height:1.25;letter-spacing:.14em;white-space:nowrap;text-transform:uppercase;color:var(--ink)}
+  .motto blockquote{margin:0;font-family:var(--sans);font-weight:550;font-size:1.7rem;line-height:1.2;letter-spacing:.16em;white-space:nowrap;text-transform:uppercase;color:var(--ink)}
   .motto blockquote span{display:block}
   .motto figcaption{margin-top:.45rem;font-size:.78rem;color:var(--pencil);font-style:italic}
   .motto figcaption span{font-style:normal}
@@ -42,26 +41,26 @@
   td.mis{color:var(--mis)}
   td.acc{color:var(--acc)}
   .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:1.25rem}
-  .pred{background:var(--sheet);border:1px solid var(--soft);border-radius:3px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem;min-width:0}
+  .pred{background:var(--sheet);border:1px solid var(--soft);border-radius:12px;padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem;min-width:0}
   .pred .meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.4rem;font-family:var(--sans);font-size:.8rem;color:var(--pencil);font-variant-numeric:tabular-nums}
   .pred p{margin:0}
   .pred .who{font-weight:600}
-  .pred .rule{font-size:.9rem;color:#33445C}
+  .pred .rule{font-size:.9rem;color:var(--ink2)}
   .pfoot{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-top:auto}
   .pfoot .due{margin:0}
   .xmini{display:inline-flex;align-items:center;justify-content:center;width:1.5rem;height:1.5rem;border-radius:50%;color:var(--pencil);border:1px solid var(--soft);flex:0 0 auto}
   .xmini svg{width:10px;height:10px}
-  .xmini:hover{color:var(--sheet);background:var(--ink);border-color:var(--ink)}
+  .xmini:hover{color:var(--brand-ink);background:var(--brand);border-color:var(--brand)}
   .due{font-family:var(--sans);font-weight:600;color:var(--ink)}
-  .askcard{background:var(--sheet);border:1px solid var(--soft);border-radius:10px;padding:1.6rem 1.6rem 1.1rem;box-shadow:0 1px 2px rgba(27,42,65,.05),0 8px 24px -12px rgba(27,42,65,.18)}
+  .askcard{background:var(--sheet);border:1px solid var(--soft);border-radius:16px;padding:1.6rem 1.6rem 1.1rem;box-shadow:0 8px 28px var(--shadow)}
   .askcard .sechead{margin-bottom:1rem}
-  .ask{display:flex;align-items:center;gap:.4rem;margin-bottom:.6rem;background:#fff;border:1px solid var(--rule);border-radius:8px;padding:.3rem;transition:border-color .15s,box-shadow .15s}
-  .ask:focus-within{border-color:var(--ink);box-shadow:0 0 0 3px rgba(27,42,65,.08)}
+  .ask{display:flex;align-items:center;gap:.4rem;margin-bottom:.6rem;background:var(--field);border:1px solid var(--rule);border-radius:10px;padding:.3rem;transition:border-color .15s,box-shadow .15s}
+  .ask:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 18%,transparent)}
   .ask input{flex:1 1 auto;min-width:0;font-size:1.02rem;padding:.6rem .7rem;border:0;background:transparent;outline:none}
   .ask input:focus-visible{outline:none}
   .ask .btn{border-radius:6px;padding:.6rem 1.2rem}
   .askcard .asknote{margin:0}
-  .track{display:inline-block;width:80px;text-align:left;vertical-align:middle;margin-right:.6rem;line-height:0}
+  .track{display:inline-block;width:56px;text-align:left;vertical-align:middle;margin-right:.6rem;line-height:0}
   .track .bar{margin-right:0}
   #ask-sum{margin-bottom:1.1rem}
   .asknote{font-size:.82rem;color:var(--pencil);margin:0 0 1.1rem}
@@ -73,10 +72,10 @@
   .count{font-family:var(--sans);font-size:.85rem;color:var(--pencil);margin:0 0 .8rem}
   .entries{display:flex;flex-direction:column;gap:.9rem}
   .more{margin-top:1.2rem}
-  .game{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;background:var(--ink);color:var(--sheet);border-radius:3px;padding:1.4rem 1.5rem}
-  .game h2{color:var(--sheet)}
-  .game p{margin:0;max-width:34rem;color:#C9D4E0}
-  .game .btn{background:var(--sheet);color:var(--ink);border-color:var(--sheet)}
+  .game{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;background:var(--brand);color:var(--brand-ink);border-radius:16px;padding:1.4rem 1.5rem}
+  .game h2{color:var(--brand-ink)}
+  .game p{margin:0;max-width:34rem;color:var(--brand-ink);opacity:.85}
+  .game .btn{background:var(--brand-ink);color:var(--brand);border-color:var(--brand-ink)}
   @media (max-width:640px){ .ledger th,.ledger td{padding:.65rem .5rem;font-size:.88rem} .opt{display:none} .hero{padding-top:2.5rem} }
 </style>
 </head>
@@ -91,7 +90,7 @@
     <section class="hero" aria-labelledby="h">
       <div class="herotop">
         <div>
-        <h1 id="h">Four besties. Every checkable claim, checked.</h1>
+        <h1 id="h">Four besties. Every checkable claim, <mark>checked.</mark></h1>
         <p class="lede">An independent record of what the All-In Podcast hosts say about markets, tech and policy, measured against the evidence, with predictions tracked until they come due. <strong>Statements are quoted word for word, with the timestamp and the sources behind every verdict.</strong></p>
         </div>
         <figure class="motto"><blockquote lang="la"><span>Vincit</span> <span>omnia</span> <span>veritas</span></blockquote><figcaption>Truth conquers all. <span>— Unknown</span></figcaption></figure>

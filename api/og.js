@@ -5,8 +5,8 @@ const { loadRows, originOf, fmtDate, ID_RE, idFromSlug } = require("./_data");
 
 const font = f => fs.readFileSync(path.join(__dirname, "_fonts", f));
 let FONTS;
-const C = { paper: "#E8ECF0", sheet: "#F6F8FA", ink: "#1B2A41", pencil: "#5E6B7A", soft: "#D5DEE7",
-  Accurate: "#1E6B5C", Misleading: "#A35F00", False: "#B3122B", Unverified: "#5E6B7A", Pending: "#2E5B9A" };
+const C = { paper: "#EDF1F8", sheet: "#FBFCFF", ink: "#1D2944", pencil: "#586781", soft: "#E1E7F5", brand: "#5544D6",
+  Accurate: "#1A7F5A", Misleading: "#B26A00", False: "#C0453C", Unverified: "#586781", Pending: "#5544D6" };
 
 const h = (type, style, children) => ({ type, props: { style: { display: "flex", ...style }, children } });
 const clip = (s, n) => { s = String(s || ""); return s.length > n ? s.slice(0, n - 1).replace(/\s+\S*$/, "") + "…" : s; };
@@ -27,7 +27,7 @@ module.exports = async function handler(req, res) {
   if (id === "game") {
     const stamp = (t, c) => h("div", { fontSize: 34, fontWeight: 600, letterSpacing: 4, color: c, border: `4px solid ${c}`, borderRadius: 10, padding: "10px 26px 8px", marginRight: 22 }, t);
     tree = h("div", { width: "100%", height: "100%", background: C.paper, color: C.ink, flexDirection: "column", justifyContent: "center", padding: "80px", fontFamily: "Geist" }, [
-      h("div", { fontFamily: "Geist Mono", fontSize: 26, letterSpacing: 3, color: C.False }, "THE ALL-IN AUDIT · GAME"),
+      h("div", { fontFamily: "Geist Mono", fontSize: 26, letterSpacing: 3, color: C.brand }, "THE ALL-IN AUDIT · GAME"),
       h("div", { fontSize: 88, fontWeight: 600, letterSpacing: -3, marginTop: 20, lineHeight: 1.0 }, "Accurate or False?"),
       h("div", { fontSize: 34, color: C.pencil, marginTop: 22 }, "Ten real quotes from the All-In hosts. Guess the verdict."),
       h("div", { marginTop: 44 }, [stamp("ACCURATE", C.Accurate), stamp("MISLEADING", C.Misleading), stamp("FALSE", C.False)]),
@@ -35,7 +35,7 @@ module.exports = async function handler(req, res) {
     ]);
   } else if (!r) {
     tree = h("div", { width: "100%", height: "100%", background: C.paper, color: C.ink, flexDirection: "column", justifyContent: "center", padding: "80px", fontFamily: "Geist" }, [
-      h("div", { fontFamily: "Geist Mono", fontSize: 26, letterSpacing: 3, color: C.False }, "THE ALL-IN AUDIT"),
+      h("div", { fontFamily: "Geist Mono", fontSize: 26, letterSpacing: 3, color: C.brand }, "THE ALL-IN AUDIT"),
       h("div", { fontSize: 72, fontWeight: 600, letterSpacing: -2, marginTop: 24, lineHeight: 1.05 }, "Four besties. Every checkable claim, checked."),
       h("div", { fontSize: 30, color: C.pencil, marginTop: 30 }, "allin.fan")
     ]);
