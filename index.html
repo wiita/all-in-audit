@@ -98,17 +98,18 @@
       <div class="statrow">
         <div class="stats" id="stats" aria-live="polite"><div><b>…</b><span>Loading the record</span></div></div>
       </div>
+      <div class="duestrip" id="duestrip" hidden></div>
     </section>
 
     <section id="scorecard" aria-labelledby="sc-h">
       <div class="sechead">
         <p class="kicker">Scorecard</p>
         <h2 id="sc-h">Who gets it right, who gets it wrong</h2>
-        <p>Rated claims only (Accurate, Misleading, False). Unverified claims and open predictions are counted separately. Sorted by the share rated False.</p>
+        <p>Rated claims only (Accurate, Misleading, False). Unverified claims and open predictions are counted separately. Sorted by the share rated False; click any column to sort by it (verdict columns sort by their share of rated claims).</p>
       </div>
       <div class="tablebox">
         <table class="ledger" id="score">
-          <thead><tr><th scope="col">Host</th><th scope="col">Episodes</th><th scope="col" class="opt" title="Statements logged (rated, unverified and predictions) divided by episodes the host appeared on">Statements per episode</th><th scope="col">Rated</th><th scope="col">Accurate</th><th scope="col">Misleading</th><th scope="col">False</th><th scope="col">False rate</th><th scope="col" class="opt">Unverified</th><th scope="col" class="opt">Open predictions</th></tr></thead>
+          <thead><tr><th scope="col">Host</th><th scope="col" data-k="on"><button type="button">Episodes</button></th><th scope="col" class="opt" data-k="per" title="Statements logged (rated, unverified and predictions) divided by episodes the host appeared on"><button type="button">Statements per episode</button></th><th scope="col" data-k="n"><button type="button">Rated</button></th><th scope="col" data-k="a" title="Sorts by share of rated claims"><button type="button">Accurate</button></th><th scope="col" data-k="m" title="Sorts by share of rated claims"><button type="button">Misleading</button></th><th scope="col" data-k="f" title="Sorts by share of rated claims"><button type="button">False</button></th><th scope="col" data-k="f" aria-sort="descending"><button type="button">False rate</button></th><th scope="col" class="opt" data-k="u"><button type="button">Unverified</button></th><th scope="col" class="opt" data-k="p"><button type="button">Open predictions</button></th></tr></thead>
           <tbody><tr><td colspan="10" class="loading" style="text-align:left">Loading…</td></tr></tbody>
         </table>
       </div>
@@ -233,9 +234,21 @@
     const c=v=>rt.filter(r=>r.verdict===v).length;
     const on=epIds.filter(e=>!(absent[e]||[]).includes(h)).length;
     return {h,on,per:on?(mine.length/on).toFixed(1):"—",n:rt.length,a:c("Accurate"),m:c("Misleading"),f:c("False"),u:mine.filter(r=>r.verdict==="Unverified").length,p:mine.filter(r=>r.verdict==="Pending").length};
-  }).sort((x,y)=>pct(y.f,y.n)-pct(x.f,x.n)||pct(y.m,y.n)-pct(x.m,x.n));
+  });
   const maxF=Math.max(...sc.map(s=>pct(s.f,s.n)),1);
-  $("score").tBodies[0].innerHTML=sc.map(s=>`<tr><th scope="row"><a href="/${SLUG[s.h]}">${esc(s.h)}</a></th><td>${s.on}</td><td class="opt">${s.per}</td><td>${s.n}</td><td class="acc">${s.a}</td><td class="mis">${s.m}</td><td class="fal">${s.f}</td><td class="fal"><span class="track" aria-hidden="true"><span class="bar" style="width:${Math.max(2,Math.round(56*pct(s.f,s.n)/maxF))}px"></span></span><span class="pctv">${pct(s.f,s.n)}%</span></td><td class="opt">${s.u}</td><td class="opt">${s.p}</td></tr>`).join("");
+  const val=(s,k)=>["a","m","f"].includes(k)?(s.n?s[k]/s.n:0):k==="per"?(parseFloat(s.per)||0):s[k];
+  let sk="f", sd=-1;
+  const drawScore=()=>{
+    sc.sort((x,y)=>sd*(val(x,sk)-val(y,sk))||pct(y.f,y.n)-pct(x.f,x.n));
+    $("score").tBodies[0].innerHTML=sc.map(s=>`<tr><th scope="row"><a href="/${SLUG[s.h]}">${esc(s.h)}</a></th><td>${s.on}</td><td class="opt">${s.per}</td><td>${s.n}</td><td class="acc">${s.a}</td><td class="mis">${s.m}</td><td class="fal">${s.f}</td><td class="fal"><span class="track" aria-hidden="true"><span class="bar" style="width:${Math.max(2,Math.round(56*pct(s.f,s.n)/maxF))}px"></span></span><span class="pctv">${pct(s.f,s.n)}%</span></td><td class="opt">${s.u}</td><td class="opt">${s.p}</td></tr>`).join("");
+  };
+  const ths=[...$("score").tHead.querySelectorAll("th[data-k]")];
+  ths.forEach(th=>th.querySelector("button").addEventListener("click",()=>{
+    const k=th.dataset.k; sd=(sk===k&&th.hasAttribute("aria-sort"))?-sd:-1; sk=k;
+    ths.forEach(t=>t.removeAttribute("aria-sort")); th.setAttribute("aria-sort",sd<0?"descending":"ascending");
+    drawScore();
+  }));
+  drawScore();
 
   // lean
   const bad=r=>r.verdict==="False"||r.verdict==="Misleading";
@@ -266,6 +279,11 @@
       <p><strong>${esc(r.claim)}</strong></p><p class="rule">${esc(ruleText(r.evidence))}</p><div class="pfoot"><p class="due">${due}</p><a class="xmini" href="${esc(xHref(r))}" target="_blank" rel="noopener" aria-label="Post this prediction on X" title="Post on X">${XI}</a></div></article>`;
   };
   openP.sort((a,b)=>(a.target||"9").localeCompare(b.target||"9"));
+  { const soon=openP.filter(r=>r.target&&days(r.target)>=0&&days(r.target)<=7), nxt=openP.find(r=>r.target&&days(r.target)>=0);
+    const short=r=>{const c=String(r.claim||""); return c.length>70?c.slice(0,69).replace(/\s+\S*$/,"")+"…":c;};
+    const item=r=>`<a href="${esc(cPath(r))}"><b>${fmtDate(r.target).replace(/ \d{4}$/,"")}</b> ${esc(r.speaker.split(" ").pop()==="Calacanis"?"Jason":r.speaker.split(" ").pop()==="Palihapitiya"?"Chamath":r.speaker.split(" ").pop())}: ${esc(short(r))}</a>`;
+    const list=soon.length?soon:(nxt?[nxt]:[]);
+    if(list.length){ $("duestrip").innerHTML=`<span class="dlabel">${soon.length?`Due this week · ${soon.length}`:"Next due"}</span>${list.slice(0,6).map(item).join("")}${soon.length>6?`<a href="#predictions">+${soon.length-6} more</a>`:""}<a class="dall" href="/receipts">Weekly receipts →</a>`; $("duestrip").hidden=false; } }
   $("open").innerHTML=openP.map(predCard).join("")||'<p class="note">No open predictions.</p>';
   const resolved=preds.filter(r=>r.verdict!=="Pending").sort((a,b)=>b.date.localeCompare(a.date));
   $("resolved").innerHTML=resolved.map(predCard).join("")||'<p class="note">None scored yet.</p>';

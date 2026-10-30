@@ -129,3 +129,22 @@ header.top nav a.navtip:hover{background:var(--brand);color:var(--brand-ink)}
 
 /* Auto-rated rows awaiting editor review */
 .autotag{display:inline-block;font-family:var(--sans);font-size:.68rem;font-weight:600;letter-spacing:.04em;color:var(--pencil);border:1px dashed var(--rule);border-radius:4px;padding:.1em .45em;white-space:nowrap}
+
+/* Sortable scorecard headers */
+#score thead th{white-space:normal;vertical-align:bottom}
+#score thead th button{all:unset;cursor:pointer;display:inline}
+#score thead th button:hover{color:var(--brand)}
+#score thead th button:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:3px}
+#score thead th[aria-sort] button{color:var(--brand)}
+#score thead th[aria-sort="descending"] button::after{content:"↓"}
+#score thead th[aria-sort="ascending"] button::after{content:"↑"}
+
+/* Due this week strip */
+.duestrip{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem .5rem;margin:1rem 0 0;padding:.7rem .9rem;background:var(--sheet);border:1px solid var(--rule);border-radius:10px;font-family:var(--sans);font-size:.85rem}
+.duestrip .dlabel{font-size:.7rem;font-weight:650;text-transform:uppercase;letter-spacing:.08em;color:var(--brand);margin-right:.25rem}
+.duestrip a{color:var(--ink2);text-decoration:none;padding:.2rem .55rem;border-radius:99px;background:var(--soft)}
+.duestrip a b{font-weight:650;color:var(--ink)}
+.duestrip a:hover{background:var(--brand);color:var(--brand-ink)}
+.duestrip a:hover b{color:var(--brand-ink)}
+.duestrip a.dall{margin-left:auto;background:none;color:var(--brand);font-weight:600}
+#score th,#score td{padding-left:.5rem;padding-right:.5rem}
