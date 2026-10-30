@@ -21,6 +21,10 @@
     {
       "source": "/corrections",
       "destination": "/api/corrections"
+    },
+    {
+      "source": "/receipts",
+      "destination": "/api/receipts"
     }
   ],
   "redirects": [
