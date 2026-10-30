@@ -26,7 +26,7 @@
   "redirects": [
     {
       "source": "/support",
-      "destination": "/methodology#funding",
+      "destination": "https://ko-fi.com/allinaudit",
       "permanent": false
     }
   ]
