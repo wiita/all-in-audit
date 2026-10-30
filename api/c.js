@@ -69,7 +69,7 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",a
 
 function mini(r) {
   return `<article class="entry e-${esc(r.verdict)}">
-      <div class="meta"><span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span><span>${fmtDate(r.date)}</span><span>${esc(r.category)}</span></div>
+      <div class="meta"><span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span>${r.auto?'<span class="autotag" title="Rated automatically from the transcript; the editor has not reviewed it yet">Auto-rated · awaiting review</span>':''}<span>${fmtDate(r.date)}</span><span>${esc(r.category)}</span></div>
       <p class="claim"><a href="${esc(pathOf(r))}">${esc(r.claim)}</a></p>
     </article>`;
 }
@@ -108,7 +108,7 @@ module.exports = async function handler(req, res) {
   const body = `    <p class="back"><a href="/#claims">← All claims</a></p>
     <p class="kicker">${esc(r.type === "Prediction" ? "Prediction" : "Claim")} · ${esc(r.id)}</p>
     <article class="entry e-${esc(r.verdict)}">
-      <div class="meta"><span class="who">${esc(r.speaker)}</span><span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span>${r.lean !== "Neutral" ? `<span class="leanpill l-${esc(r.lean)}">${esc(r.lean)}</span>` : ""}<span><a href="${esc(r.url)}" target="_blank" rel="noopener">${fmtDate(r.date)}</a> at ${esc(r.ts)}</span><span>${esc(r.category)}</span>${due}</div>
+      <div class="meta"><span class="who">${esc(r.speaker)}</span><span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span>${r.auto?'<span class="autotag" title="Rated automatically from the transcript; the editor has not reviewed it yet">Auto-rated · awaiting review</span>':''}${r.lean !== "Neutral" ? `<span class="leanpill l-${esc(r.lean)}">${esc(r.lean)}</span>` : ""}<span><a href="${esc(r.url)}" target="_blank" rel="noopener">${fmtDate(r.date)}</a> at ${esc(r.ts)}</span><span>${esc(r.category)}</span>${due}</div>
       <blockquote>“${esc(r.quote)}”</blockquote>
       <p class="claim"><strong>Claim:</strong> ${esc(r.claim)}</p>
       <div class="ev"><p><strong>Evidence.</strong> ${esc(r.evidence)}</p>${r.notes ? `<p class="note">${esc(r.notes)}</p>` : ""}</div>

@@ -1,0 +1,4 @@
+{
+  "note": "Rows published automatically by the weekend pipeline before editor review. Same columns as the sheet plus Auto=1. Rows move to the sheet once reviewed; the sheet wins on ID clashes.",
+  "rows": []
+}

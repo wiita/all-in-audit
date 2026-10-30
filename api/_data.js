@@ -24,7 +24,7 @@ function clean(r) {
     id: r.ID, status: r.Status, type: r.Type, date: r.Date, title: r.EpisodeTitle, url: r.EpisodeURL, ts: r.Timestamp,
     speaker: r.Speaker, quote: r.Quote, claim: r.Claim, category: r.Category, verdict: r.Verdict, evidence: r.Evidence,
     sources: (r.Sources || "").split("|").map(s => s.trim()).filter(s => /^https?:\/\//.test(s)),
-    target: r.TargetDate, notes: r.Notes, lean: r.Lean || "Neutral"
+    target: r.TargetDate, notes: r.Notes, lean: r.Lean || "Neutral", auto: r.Auto === "1"
   };
 }
 
@@ -41,6 +41,12 @@ async function loadRows(origin) {
       rows = (await r.json()).rows.map(clean);
     } catch (e) { rows = []; }
   }
+  // Auto-rated rows (published by the weekend pipeline, not yet reviewed). The sheet wins on ID clashes.
+  try {
+    const seen = new Set(rows.map(r => r.id));
+    const auto = require("../data/auto.json").rows || [];
+    rows = rows.concat(auto.filter(r => r.ID && !seen.has(r.ID)).map(clean));
+  } catch (e) {}
   cache = { t: Date.now(), rows };
   return rows;
 }

@@ -88,7 +88,7 @@
   const {load,HOSTS,RATED,esc,hostOf,fmtDate}=window.Audit;
   const $=id=>document.getElementById(id), stage=$("stage");
   let ALL;
-  try{ ALL=(await load()).rows.filter(r=>RATED.includes(r.verdict)); }catch(e){ stage.innerHTML='<p class="note">The record could not be loaded. Try again shortly.</p>'; return; }
+  try{ ALL=(await load()).rows.filter(r=>RATED.includes(r.verdict)&&!r.auto); }catch(e){ stage.innerHTML='<p class="note">The record could not be loaded. Try again shortly.</p>'; return; }
   HOSTS.forEach(h=>$("host").insertAdjacentHTML("beforeend",`<option>${esc(h)}</option>`));
   const topicOf=r=>{ if(r.lean!=="Neutral"||["Politics","Policy","Geopolitics","Law","Immigration"].includes(r.category)) return "politics";
     if(["Tech/AI","Cybersecurity","Science"].includes(r.category)) return "tech";

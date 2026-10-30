@@ -126,3 +126,6 @@ header.top nav a.navtip:hover{background:var(--brand);color:var(--brand-ink)}
 .vs-venues a,.vs-venues span{padding:.15rem .5rem;border-radius:99px;background:var(--soft);color:var(--ink2);text-decoration:none}
 .vs-venues a:hover{background:var(--brand);color:var(--brand-ink)}
 .vs-venues span{background:none;border:1px dashed var(--rule);color:var(--pencil)}
+
+/* Auto-rated rows awaiting editor review */
+.autotag{display:inline-block;font-family:var(--sans);font-size:.68rem;font-weight:600;letter-spacing:.04em;color:var(--pencil);border:1px dashed var(--rule);border-radius:4px;padding:.1em .45em;white-space:nowrap}

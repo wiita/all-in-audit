@@ -135,10 +135,10 @@
 - What the site reports is the share of each host's political claims by Lean and the accuracy of each group, so readers can see whether a host's claims track the administration's line, and how accurate those claims are.</p>
 <h2>7. Workflow</h2>
 <ol>
-<li>New episode transcripts are fetched daily (GitHub Actions, spoken.md).</li>
-<li>Episodes are processed in batches of 5. Claims are drafted with quote, timestamp, verdict, evidence, sources, and checked automatically against the transcript.</li>
-<li>Drafts are imported into the Claims tab of the Google Sheet with Status = Draft.</li>
-<li>The editor reviews each batch and sets Status = Published. Only Published rows reach the public site (the Public tab is a filter of Published rows).</li>
+<li>New episode transcripts are fetched every 6 hours (GitHub Actions, spoken.md).</li>
+<li><strong>New episodes</strong> are rated automatically over the weekend they come out, with the same rules, research and transcript checks as everything else, and published straight away marked <span class="autotag">Auto-rated · awaiting review</span>. Prediction rules written this way are marked "Rule (auto)". The editor then reviews them: confirmed rows lose the label; anything changed is logged on the <a href="/corrections">corrections</a> page.</li>
+<li><strong>Older episodes</strong> (the backfill) are processed in batches of 5, imported into the Claims tab of the Google Sheet with Status = Draft, and published only after the editor's review.</li>
+<li>Claims are drafted with quote, timestamp, verdict, evidence and sources, and every quote is checked automatically against the transcript.</li>
 </ol>
 <h2>8. Corrections</h2>
 <ul>
