@@ -53,7 +53,7 @@ ${body}
   </main>
   <footer>
     <span>An independent audit by <a class="xfoot" href="https://x.com/wiitapur" target="_blank" rel="noopener">${XICON.replace(/13/g, "12")}@wiitapur</a>. Not affiliated with the All-In Podcast. Quotes are short excerpts for commentary; listen to the full episodes on the show's own channels.</span>
-    <span>Spotted an error? <a href="https://github.com/wiita/all-in-audit/issues/new?template=correction.yml">Request a correction</a></span>
+    <span>Spotted an error? <a href="https://github.com/wiita/all-in-audit/issues/new?template=correction.yml">Request a correction</a> · <a href="/corrections">Corrections log</a></span>
   </footer>
 </div>
 <script>
@@ -118,3 +118,5 @@ module.exports = async function handler(req, res) {
   res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=86400");
   return res.status(200).send(page({ title, desc, url, image: `${SITE}/og/${r.id}.png`, body }));
 };
+module.exports.page = page;
+module.exports.mini = mini;

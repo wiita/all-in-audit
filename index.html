@@ -190,7 +190,7 @@
 
   <footer>
     <span>An independent audit by <a class="xfoot" href="https://x.com/wiitapur" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>@wiitapur</a>. Not affiliated with the All-In Podcast. Quotes are short excerpts for commentary; listen to the full episodes on the show's own channels.</span>
-    <span>Spotted an error? <a href="https://github.com/wiita/all-in-audit/issues/new?template=correction.yml">Request a correction</a> · <span id="src"></span></span>
+    <span>Spotted an error? <a href="https://github.com/wiita/all-in-audit/issues/new?template=correction.yml">Request a correction</a> · <a href="/corrections">Corrections log</a> · <span id="src"></span></span>
   </footer>
 </div>
 
@@ -213,6 +213,7 @@
     .map(([n,l])=>`<div><b>${n}</b><span>${l}</span></div>`).join("");
 
   // scorecard
+  const SLUG={"Chamath Palihapitiya":"chamath","David Sacks":"sacks","David Friedberg":"friedberg","Jason Calacanis":"jason"};
   const pct=(a,b)=>b?Math.round(100*a/b):0;
   let absent={};
   try{ const ar=await fetch("/data/appearances.json"); if(ar.ok) absent=(await ar.json()).absent||{}; }catch(e){}
@@ -224,7 +225,7 @@
     return {h,on,per:on?(mine.length/on).toFixed(1):"—",n:rt.length,a:c("Accurate"),m:c("Misleading"),f:c("False"),u:mine.filter(r=>r.verdict==="Unverified").length,p:mine.filter(r=>r.verdict==="Pending").length};
   }).sort((x,y)=>pct(y.f,y.n)-pct(x.f,x.n)||pct(y.m,y.n)-pct(x.m,x.n));
   const maxF=Math.max(...sc.map(s=>pct(s.f,s.n)),1);
-  $("score").tBodies[0].innerHTML=sc.map(s=>`<tr><th scope="row">${esc(s.h)}</th><td>${s.on}</td><td class="opt">${s.per}</td><td>${s.n}</td><td class="acc">${s.a}</td><td class="mis">${s.m}</td><td class="fal">${s.f}</td><td class="fal"><span class="track" aria-hidden="true"><span class="bar" style="width:${Math.max(2,Math.round(80*pct(s.f,s.n)/maxF))}px"></span></span><span class="pctv">${pct(s.f,s.n)}%</span></td><td class="opt">${s.u}</td><td class="opt">${s.p}</td></tr>`).join("");
+  $("score").tBodies[0].innerHTML=sc.map(s=>`<tr><th scope="row"><a href="/${SLUG[s.h]}">${esc(s.h)}</a></th><td>${s.on}</td><td class="opt">${s.per}</td><td>${s.n}</td><td class="acc">${s.a}</td><td class="mis">${s.m}</td><td class="fal">${s.f}</td><td class="fal"><span class="track" aria-hidden="true"><span class="bar" style="width:${Math.max(2,Math.round(56*pct(s.f,s.n)/maxF))}px"></span></span><span class="pctv">${pct(s.f,s.n)}%</span></td><td class="opt">${s.u}</td><td class="opt">${s.p}</td></tr>`).join("");
 
   // lean
   const bad=r=>r.verdict==="False"||r.verdict==="Misleading";

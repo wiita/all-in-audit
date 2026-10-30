@@ -2,8 +2,25 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/c/:id", "destination": "/api/c?id=:id" },
-    { "source": "/:v(accurate|misleading|false|unverified|pending)/:slug", "destination": "/api/c?v=:v&slug=:slug" },
-    { "source": "/og/:id.png", "destination": "/api/og?id=:id" }
+    {
+      "source": "/c/:id",
+      "destination": "/api/c?id=:id"
+    },
+    {
+      "source": "/:v(accurate|misleading|false|unverified|pending)/:slug",
+      "destination": "/api/c?v=:v&slug=:slug"
+    },
+    {
+      "source": "/og/:id.png",
+      "destination": "/api/og?id=:id"
+    },
+    {
+      "source": "/:h(chamath|palihapitiya|sacks|friedberg|jason|calacanis|jcal)",
+      "destination": "/api/host?h=:h"
+    },
+    {
+      "source": "/corrections",
+      "destination": "/api/corrections"
+    }
   ]
 }
