@@ -12,7 +12,7 @@ module.exports = async function handler(req, res) {
     .map(r => { const m = (r.notes || "").match(/Correction\s*\((\d{4}-\d{2}-\d{2})\)/i); return { r, when: m ? m[1] : "" }; })
     .sort((a, b) => (b.when || b.r.date).localeCompare(a.when || a.r.date));
   const item = ({ r, when }) => `<article class="entry e-${esc(r.verdict)}">
-      <div class="meta"><span class="who">${esc(r.speaker)}</span><span>Now: <span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span></span><span>Said ${fmtDate(r.date)}</span>${when ? `<span>Corrected ${fmtDate(when)}</span>` : ""}</div>
+      <div class="meta"><span class="who">${esc(r.speaker)}</span><span>Now: <span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span>${r.auto?'<span class="autotag" title="Rated automatically from the transcript; the editor has not reviewed it yet">Auto-rated · awaiting review</span>':''}</span><span>Said ${fmtDate(r.date)}</span>${when ? `<span>Corrected ${fmtDate(when)}</span>` : ""}</div>
       <p class="claim"><a href="${esc(pathOf(r))}">${esc(r.claim)}</a></p>
       <p class="note" style="margin:0">${esc(r.notes)}</p>
     </article>`;

@@ -56,7 +56,7 @@ module.exports = async function handler(req, res) {
   const crow = Object.entries(cats).sort((a, b) => b[1].n - a[1].n).slice(0, 8).map(([k, v]) => `<tr><th scope="row">${esc(k)}</th><td>${v.n}</td><td>${pct(v.bad, v.n)}%</td></tr>`).join("");
 
   const wrong = mine.filter(r => r.verdict === "False" || r.verdict === "Misleading").slice(0, 8);
-  const predCard = r => `<article class="entry e-${esc(r.verdict)}"><div class="meta"><span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span><span>Said ${fmtDate(r.date)}</span>${r.target ? `<span>${r.verdict === "Pending" ? "Due" : "Resolved"} ${fmtDate(r.target)}</span>` : ""}</div><p class="claim"><a href="${esc(pathOf(r))}">${esc(r.claim)}</a></p></article>`;
+  const predCard = r => `<article class="entry e-${esc(r.verdict)}"><div class="meta"><span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span>${r.auto?'<span class="autotag" title="Rated automatically from the transcript; the editor has not reviewed it yet">Auto-rated · awaiting review</span>':''}<span>Said ${fmtDate(r.date)}</span>${r.target ? `<span>${r.verdict === "Pending" ? "Due" : "Resolved"} ${fmtDate(r.target)}</span>` : ""}</div><p class="claim"><a href="${esc(pathOf(r))}">${esc(r.claim)}</a></p></article>`;
 
   const fr = pct(c("False"), rated.length), mr = pct(c("Misleading"), rated.length);
   const first = mine.length ? mine[mine.length - 1].date : "", last = mine.length ? mine[0].date : "";

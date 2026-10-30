@@ -28,11 +28,19 @@
     return {
       id:r.ID, status:r.Status, type:r.Type, date:r.Date, episode:r.Episode, title:r.EpisodeTitle, url:r.EpisodeURL,
       ts:r.Timestamp, speaker:r.Speaker, quote:r.Quote, claim:r.Claim, category:r.Category, verdict:r.Verdict,
-      evidence:r.Evidence, sources, target:r.TargetDate, next:r.NextReview, notes:r.Notes, lean:r.Lean||"Neutral"
+      evidence:r.Evidence, sources, target:r.TargetDate, next:r.NextReview, notes:r.Notes, lean:r.Lean||"Neutral", auto:r.Auto==="1"
     };
   }
 
+  async function autoRows(){
+    try{ const r=await fetch("/data/auto.json",{cache:"no-store"}); return r.ok?((await r.json()).rows||[]):[]; }catch(e){ return []; }
+  }
+  function merge(rows,auto){ const seen=new Set(rows.map(r=>r.id)); return rows.concat(auto.filter(r=>r.ID&&!seen.has(r.ID)).map(clean)); }
+
   async function load(){
+    const d=await load0(); d.rows=merge(d.rows,await autoRows()); return d;
+  }
+  async function load0(){
     try{
       const res=await fetch(SHEET_CSV_URL,{cache:"no-store"});
       if(!res.ok) throw new Error("HTTP "+res.status);

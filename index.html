@@ -261,7 +261,7 @@
   const ruleText=e=>{ const m=(e||"").match(/(Rule \(signed off[^)]*\):.*|Resolves.*|Resolved:.*)/); return m?m[1]:e; };
   const predCard=r=>{
     const d=r.target?days(r.target):null;
-    const due = r.verdict==="Pending" ? (d===null?"":d<0?`Due ${fmtDate(r.target)} · being scored`:d===0?"Due today":`Due ${fmtDate(r.target)} · ${d} day${d===1?"":"s"}`) : `Scored <span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span>`;
+    const due = r.verdict==="Pending" ? (d===null?"":d<0?`Due ${fmtDate(r.target)} · being scored`:d===0?"Due today":`Due ${fmtDate(r.target)} · ${d} day${d===1?"":"s"}`) : `Scored <span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span>${r.auto?'<span class="autotag" title="Rated automatically from the transcript; the editor has not reviewed it yet">Auto-rated · awaiting review</span>':''}`;
     return `<article class="pred"><div class="meta"><span class="who" style="color:var(--ink)">${esc(r.speaker)}</span><span>said ${fmtDate(r.date)}</span></div>
       <p><strong>${esc(r.claim)}</strong></p><p class="rule">${esc(ruleText(r.evidence))}</p><div class="pfoot"><p class="due">${due}</p><a class="xmini" href="${esc(xHref(r))}" target="_blank" rel="noopener" aria-label="Post this prediction on X" title="Post on X">${XI}</a></div></article>`;
   };
@@ -280,7 +280,7 @@
   function entry(r){
     const src=r.sources.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(hostOf(u))}</a>`).join("");
     return `<article class="entry e-${esc(r.verdict)}">
-      <div class="meta"><span class="who">${esc(r.speaker)}</span><span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span>${r.lean!=="Neutral"?`<span class="leanpill l-${esc(r.lean)}">${esc(r.lean)}</span>`:""}<span><a href="${esc(r.url)}" target="_blank" rel="noopener">${fmtDate(r.date)}</a> at ${esc(r.ts)}</span><span>${esc(r.category)}</span><span>${esc(r.id)}</span></div>
+      <div class="meta"><span class="who">${esc(r.speaker)}</span><span class="chip v-${esc(r.verdict)}">${esc(r.verdict)}</span>${r.auto?'<span class="autotag" title="Rated automatically from the transcript; the editor has not reviewed it yet">Auto-rated · awaiting review</span>':''}${r.lean!=="Neutral"?`<span class="leanpill l-${esc(r.lean)}">${esc(r.lean)}</span>`:""}<span><a href="${esc(r.url)}" target="_blank" rel="noopener">${fmtDate(r.date)}</a> at ${esc(r.ts)}</span><span>${esc(r.category)}</span><span>${esc(r.id)}</span></div>
       <blockquote>“${esc(r.quote)}”</blockquote>
       <p class="claim"><strong>Claim:</strong> ${esc(r.claim)}</p>
       <details><summary>Evidence and sources</summary><p>${esc(r.evidence)}</p>${r.notes?`<p class="note">${esc(r.notes)}</p>`:""}<div class="srcs">${src}</div></details>
