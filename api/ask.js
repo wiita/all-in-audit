@@ -28,7 +28,7 @@ const TOOL = {
     properties: {
       hosts: { type: "array", items: { type: "string", enum: HOSTS }, description: "Hosts the question is about. Empty for all." },
       verdicts: { type: "array", items: { type: "string", enum: VERDICTS }, description: "Verdicts to show. 'wrong', 'lies', 'false' -> False and Misleading. 'right' -> Accurate. 'predictions' still open -> Pending. Empty for all." },
-      lean: { type: "string", enum: ["", ...LEANS], description: "Pro-admin if the question is about echoing/defending the Trump administration; Critical if about criticizing it; empty otherwise." },
+      lean: { type: "string", enum: ["", "Pro-admin", "Critical"], description: "Pro-admin only if the question is explicitly about echoing/defending the Trump administration; Critical only if explicitly about criticizing it; empty in every other case, including ordinary political topics." },
       categories: { type: "array", items: { type: "string", enum: CATEGORIES }, description: "Topic categories, only if the question clearly names a topic. Empty otherwise." },
       keywords: { type: "array", items: { type: "string", maxLength: 30 }, maxItems: 6, description: "Up to 6 short search terms (single words or short names) likely to appear in the quote, claim or evidence, e.g. 'Anthropic', 'tariff', 'SpaceX'. Include common synonyms. Empty if the filters alone answer the question." },
       predictions_only: { type: "boolean", description: "True if the reader asks specifically about predictions or forecasts." },
@@ -70,10 +70,15 @@ module.exports = async function handler(req, res) {
     const call = (data.content || []).find(c => c.type === "tool_use");
     const f = (call && call.input) || {};
     if (f.off_topic) return res.status(200).json({ off_topic: true });
+    // Deterministic backstops: plain words about right/wrong always set the verdict filter,
+    // and "Neutral" is never used as a lean filter (it would hide most political claims).
+    let verdicts = pick(f.verdicts, VERDICTS);
+    if (!verdicts.length && /\b(wrong|false|lie[sd]?|lying|incorrect|mislead\w*|miss(ed)?|bad calls?|blew)\b/i.test(q)) verdicts = ["False", "Misleading"];
+    else if (!verdicts.length && /\b(right|correct|accurate|nailed|got it)\b/i.test(q)) verdicts = ["Accurate"];
     return res.status(200).json({
       hosts: pick(f.hosts, HOSTS),
-      verdicts: pick(f.verdicts, VERDICTS),
-      lean: LEANS.includes(f.lean) ? f.lean : "",
+      verdicts,
+      lean: ["Pro-admin", "Critical"].includes(f.lean) ? f.lean : "",
       categories: pick(f.categories, CATEGORIES),
       keywords: Array.isArray(f.keywords) ? f.keywords.map(k => String(k).replace(/[^\p{L}\p{N} .\-'$%]/gu, "").trim().slice(0, 30)).filter(k => k.length > 1).slice(0, 6) : [],
       predictions_only: !!f.predictions_only
