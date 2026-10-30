@@ -294,7 +294,7 @@
     const list=rows.filter(r=> A ? (
         (!A.hosts.length||A.hosts.includes(r.speaker))&&(!A.verdicts.length||A.verdicts.includes(r.verdict))&&(!A.lean||r.lean===A.lean)
         &&(!A.predictions_only||r.type==="Prediction")
-        &&((!A.categories.length&&!A.keywords.length)||A.categories.includes(r.category)||A.keywords.some(k=>text(r).includes(k.toLowerCase())))
+        &&(A.keywords.length?A.keywords.some(k=>text(r).includes(k.toLowerCase())):(!A.categories.length||A.categories.includes(r.category)))
       ) : ((!h||r.speaker===h)&&(!v||r.verdict===v)&&(!l||r.lean===l)&&(!c||r.category===c)&&(!q||text(r).includes(q))))
       .sort((a,b)=>(order[a.verdict]??9)-(order[b.verdict]??9)||b.date.localeCompare(a.date));
     $("count").textContent=`${list.length} statement${list.length===1?"":"s"}${list.length>shown?`, showing ${shown}`:""}`;
