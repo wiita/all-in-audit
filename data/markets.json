@@ -91,6 +91,8 @@
     "AIA-20260403-02": { "set": "tsla-spacex-2027", "side": "yes", "fit": "close", "gap": "The markets end in December 2027 and resolve on an announcement; his call runs to April 2028." },
     "AIA-20250822-06": { "set": "newsom-nominee", "side": "yes", "fit": "same" },
     "AIA-20250822-07": { "set": "aoc-president", "side": "no", "fit": "close", "gap": "No market prices 'a socialist'; AOC, the best-known democratic socialist in the field, is the nearest. His call needs her to lose." },
-    "AIA-20260821-13": { "set": "aoc-president", "side": "yes", "fit": "close", "gap": "His call is a democratic-socialist candidate 'like AOC'; the market prices AOC herself." }
+    "AIA-20260821-13": { "set": "aoc-president", "side": "yes", "fit": "close", "gap": "His call is a democratic-socialist candidate 'like AOC'; the market prices AOC herself." },
+    "AIA-20261030-27": { "set": "r-senate-d-house", "side": "yes", "fit": "close", "gap": "The markets price who controls each chamber, not whether the House majority is narrow (230 seats or fewer)." },
+    "AIA-20261030-28": { "set": "d-sweep", "side": "yes", "fit": "same" }
   }
 }
