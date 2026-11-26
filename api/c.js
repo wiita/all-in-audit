@@ -62,7 +62,7 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",a
   try{await navigator.clipboard.writeText(b.dataset.copy);b.textContent="Copied";b.classList.add("copied");}catch(e){prompt("Copy this link",b.dataset.copy);}
 }));
 </script>
-<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/va.js"></script>
 </body>
 </html>`;
 }
